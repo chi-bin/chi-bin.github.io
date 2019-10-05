@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Chi-bin·blog</title>
+  
+  <subtitle>望着山川河流擎烛而走</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2019-10-05T08:54:42.712Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>chi-bin</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>排序算法</title>
+    <link href="http://yoursite.com/2019/10/02/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2019/10/02/排序算法/</id>
+    <published>2019-10-02T03:56:53.000Z</published>
+    <updated>2019-10-05T08:54:42.712Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h1><p>今天打算梳理一下我所了解的排序算法，不同的排序算法所拥有的时间复杂度，空间复杂度，是否稳定，都不一样，所以在不同的情况下有不同的应用场景，做个大概的总结。</p><a id="more"></a><h2 id="冒泡"><a href="#冒泡" class="headerlink" title="冒泡"></a>冒泡</h2><ul><li>基本思想：把最小的元素或是最大的元素，依次放到数组的最右边，直到全部有序，每次比较发现不符合排序规则，就进行交换</li><li>时间复杂度：O(n^2),平方阶</li><li>稳定性：是</li><li>代码(升序排列)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bubblesort</span><span class="params">(<span class="keyword">int</span>[] a)</span></span>&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a.length-<span class="number">1</span>;i++)&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;a.length-<span class="number">1</span>-i;j++)&#123;</span><br><span class="line"><span class="keyword">if</span>(a[j]&gt;a[j+<span class="number">1</span>])&#123;</span><br><span class="line"><span class="keyword">int</span> temp=a[j+<span class="number">1</span>];</span><br><span class="line">a[j+<span class="number">1</span>]=a[j];</span><br><span class="line">a[j]=temp;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul><h2 id="快速排序（冒泡的升级版本）"><a href="#快速排序（冒泡的升级版本）" class="headerlink" title="快速排序（冒泡的升级版本）"></a>快速排序（冒泡的升级版本）</h2><ul><li>基本思想：通过一趟排序，把数组分成两个部分，其中一部分比另一部分都小，然后再分别以这两个部分为基础部分进行递归，直到退出的时候，就是有序的。</li><li>时间复杂度：平均和最优的情况都是线性对数阶 O(nlogn)，最坏的情况是O(n^2)</li><li>稳定性：否</li><li>代码(升序排列)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quicksort</span><span class="params">(<span class="keyword">int</span>[] a,<span class="keyword">int</span> left,<span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line"><span class="keyword">int</span> l=left;</span><br><span class="line"><span class="keyword">int</span> r=right;</span><br><span class="line"><span class="keyword">int</span> mid=(l+r)/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">while</span>(l&lt;r)&#123;<span class="comment">//当左边的标志比右边的小的时候继续循环，直到会面</span></span><br><span class="line"><span class="keyword">while</span>(l&lt;a[mid])&#123;l++;&#125;<span class="comment">//在左边找到一个比中间值大的数</span></span><br><span class="line"><span class="keyword">while</span>(r&gt;a[mid])&#123;r--;&#125;<span class="comment">//在右边找到一个比中间值小的数</span></span><br><span class="line"><span class="keyword">if</span>(l&gt;=r)&#123;</span><br><span class="line"><span class="keyword">break</span>;<span class="comment">//当左边的标志大于右边的时候，说明分好了两个部分</span></span><br><span class="line">&#125;<span class="comment">//没做就是还没有分好，并且找到了这样的两个数</span></span><br><span class="line"><span class="keyword">int</span> temp=a[l];<span class="comment">//交换</span></span><br><span class="line">a[l]=a[r];</span><br><span class="line">a[r]=temp;</span><br><span class="line"><span class="keyword">if</span>(a[l]==a[mid])&#123;r--;&#125;<span class="comment">//发现交换之后，左边与中值相等，右边就左移一位</span></span><br><span class="line"><span class="keyword">if</span>(a[r]==a[mid])&#123;l++;&#125;<span class="comment">//右边与中值相等，就把左边右移一位</span></span><br><span class="line">&#125;<span class="comment">//做完之后就分成了连个部分。然后把这两个部分作为基础部分再次递归</span></span><br><span class="line"><span class="keyword">if</span>(l==r)&#123;<span class="comment">//中间的这个值，实际上已经是两个部分的中值了，既已经可以认定是有序的了，所以可以不进递归</span></span><br><span class="line">l++;<span class="comment">//预防了两边的冲突</span></span><br><span class="line">r--;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(l&lt;right)&#123;quicksort(a,l,right);&#125;</span><br><span class="line"><span class="keyword">if</span>(r&gt;left)&#123;quicksort(a,left,r);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul><h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><ul><li>基本思想：每趟把未排序的数组的第一个元素插入到前面的有序序列中去</li><li>时间复杂度：最优:O(n),平均：O(n^2),最差：O(n^2)</li><li>空间复杂度：常数阶</li><li>稳定性：稳定<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertsort</span><span class="params">(<span class="keyword">int</span>[] a)</span></span>&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a.length;i++)&#123;</span><br><span class="line"><span class="keyword">int</span> index=i-<span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> val=a[i];</span><br><span class="line"><span class="keyword">while</span>((index&gt;=<span class="number">0</span>)&amp;&amp;val&lt;a[index])&#123;</span><br><span class="line">a[index+<span class="number">1</span>]=a[index];</span><br><span class="line">index--;</span><br><span class="line">&#125;</span><br><span class="line">a[index+<span class="number">1</span>]=val;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;排序算法&quot;&gt;&lt;a href=&quot;#排序算法&quot; class=&quot;headerlink&quot; title=&quot;排序算法&quot;&gt;&lt;/a&gt;排序算法&lt;/h1&gt;&lt;p&gt;今天打算梳理一下我所了解的排序算法，不同的排序算法所拥有的时间复杂度，空间复杂度，是否稳定，都不一样，所以在不同的情况下有不同的应用场景，做个大概的总结。&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="数据结构和算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>servlet大概</title>
+    <link href="http://yoursite.com/2019/09/29/servlet%E5%A4%A7%E6%A6%82/"/>
+    <id>http://yoursite.com/2019/09/29/servlet大概/</id>
+    <published>2019-09-29T03:48:37.000Z</published>
+    <updated>2019-10-05T08:57:16.297Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。"><a href="#servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。" class="headerlink" title="servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。"></a>servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。</h2><a id="more"></a><h2 id="首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，"><a href="#首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，" class="headerlink" title="首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，"></a>首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，</h2><h2 id="Java-Servlet-是运行在带有支持-Java-Servlet-规范的解释器的-web-服务器上的-Java-类。"><a href="#Java-Servlet-是运行在带有支持-Java-Servlet-规范的解释器的-web-服务器上的-Java-类。" class="headerlink" title="Java Servlet 是运行在带有支持 Java Servlet 规范的解释器的 web 服务器上的 Java 类。"></a>Java Servlet 是运行在带有支持 Java Servlet 规范的解释器的 web 服务器上的 Java 类。</h2><ol><li>Servlet 可以使用 javax.servlet 和 javax.servlet.http 包创建，它是 Java 企业版的标准组成部分，Java 企业版是支持大型开发项目的 Java 类库的扩展版本。</li><li>这些类实现 Java Servlet 和 JSP 规范。在写本教程的时候，二者相应的版本分别是 Java Servlet 2.5 和 JSP 2.1。</li><li>Java Servlet 就像任何其他的 Java 类一样已经被创建和编译。在您安装 Servlet 包并把它们添加到您的计算机上的 Classpath 类路径中之后，您就可以通过 JDK 的 Java 编译器或任何其他编译器来编译 Servlet。<h2 id="Java-Servlet-通常情况下与使用-CGI（Common-Gateway-Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于-CGI，Servlet-有以下几点优势："><a href="#Java-Servlet-通常情况下与使用-CGI（Common-Gateway-Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于-CGI，Servlet-有以下几点优势：" class="headerlink" title="Java Servlet 通常情况下与使用 CGI（Common Gateway Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于 CGI，Servlet 有以下几点优势："></a>Java Servlet 通常情况下与使用 CGI（Common Gateway Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于 CGI，Servlet 有以下几点优势：</h2></li><li>性能明显更好。</li><li>Servlet 在 Web 服务器的地址空间内执行。这样它就没有必要再创建一个单独的进程来处理每个客户端请求。</li><li>Servlet 是独立于平台的，因为它们是用 Java 编写的。</li><li>服务器上的 Java 安全管理器执行了一系列限制，以保护服务器计算机上的资源。因此，Servlet 是可信的。</li><li>Java 类库的全部功能对 Servlet 来说都是可用的。它可以通过 sockets 和 RMI 机制与 applets、数据库或其他软件进行交互。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。&quot;&gt;&lt;a href=&quot;#servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。&quot; class=&quot;headerlink&quot; title=&quot;servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。&quot;&gt;&lt;/a&gt;servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。&lt;/h2&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="servlet" scheme="http://yoursite.com/tags/servlet/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringMvc学习总结</title>
+    <link href="http://yoursite.com/2019/09/27/SpringMvc%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2019/09/27/SpringMvc学习总结/</id>
+    <published>2019-09-27T02:30:01.000Z</published>
+    <updated>2019-10-05T08:57:27.748Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="流程图解"><a href="#流程图解" class="headerlink" title="流程图解"></a>流程图解</h2><p><img src="/2019/09/27/SpringMvc学习总结/SpringMvc%E6%B5%81%E7%A8%8B.png" alt="图解"></p><a id="more"></a><h3 id="流程详解"><a href="#流程详解" class="headerlink" title="流程详解"></a>流程详解</h3><ol><li>客户端发送请求到DispatcherServlet(拦截器)</li></ol><ul><li><p>要了解为什么DispatcherServlet可以拦截所有的请求和底层，就要先了解servlet是什么。<a href="/serlet大概">servlet大概</a><br><img src="/2019/09/27/SpringMvc学习总结/diceng.png" alt="DispatcherServlet"></p></li><li><p>而继承了HTTPServlet的DispatcherServlet，在其父类FrameWorkServlet中实现了HTTPServlet的doGet，doPost等方法，代码实现如下</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    processRequest(request, response);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    processRequest(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>因为实现了这些方法，所以拦截器DispatcherServlet可以拦截所有的请求。</p></li></ul><ol start="2"><li>DispatcherServlet根据请求信息调用HandlerMapping，解析请求对应的Handler或是controller。返回一个Handler或是controller。</li></ol><ul><li>因为有次面试被为什么给折磨到崩裂开来，现在碰到这种问题，我都要问问自己为什么<br><img src="/2019/09/27/SpringMvc学习总结/handelermapping.png" alt="HandlerMapping"><br>SimpleUrlHandlerMapping类通过配置文件把url映射到Controller类<br>DefaultAnnotationHandlerMapping通过注解把URL映射到Controller类</li></ul><ol start="3"><li>解析到对应的Handler或者是controller后开始由HandlerAdapter适配器处理。帮助DispatcherServlet处理映射请求处理程序的适配器。他的作用是根据HandlerMapping返回的Handler对象（controller对象）然后去适配具体的方法。<br><img src="/2019/09/27/SpringMvc学习总结/HandlerAdapter.png" alt="HandlerAdapter"><br>AnnotationMethodHandlerAdapter：通过注解，把请求URL映射到Controller类的方法上。</li></ol><p>4.处理器完成任务了之后，会返回一个ModeAndView对象，Mode是返回的数据对象，而view是逻辑上的view。</p><ul><li>什么是modeAndview呢？<br>ModelAndView是Spring中标准的类，完全是Spring自己封装的对象。<br>实际上是两个部分一个是view，在我的理解来看就是一个标识id的作用，用来告知viewResolver去哪里找到view文件。而Mode由addObject()来决定的，他的本质是HashMap，键值对；</li></ul><p>5.ViewResolver会根据逻辑上的view来查找实际上的view</p><ul><li>就是根据那个标识id来去查找实际的view。具体怎么实现的呢？<br><img src="/2019/09/27/SpringMvc学习总结/vrs.png" alt="viewResolver"><br>首先InternalResourceViewResolver extends（继承）了 UrlBasedViewResolver；然后顺便说，把用于显示（view）的jsp文件放在WEB-INF文件夹下是一种安全的做法，这样不能通过url直接access这些jsp，只能通过Controller java类来访问它们。</li></ul><p>6.DispatcherServlet 会根据找到的实际的view然后把mode给它，通过浏览器表达给用户。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;流程图解&quot;&gt;&lt;a href=&quot;#流程图解&quot; class=&quot;headerlink&quot; title=&quot;流程图解&quot;&gt;&lt;/a&gt;流程图解&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/2019/09/27/SpringMvc学习总结/SpringMvc%E6%B5%81%E7%A8%8B.png&quot; alt=&quot;图解&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="SpringMvc" scheme="http://yoursite.com/tags/SpringMvc/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>windows 当前目录下打开控制台</title>
+    <link href="http://yoursite.com/2019/06/01/windows-%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%89%93%E5%BC%80%E6%8E%A7%E5%88%B6%E5%8F%B0/"/>
+    <id>http://yoursite.com/2019/06/01/windows-当前目录下打开控制台/</id>
+    <published>2019-06-01T14:40:49.000Z</published>
+    <updated>2019-10-05T08:56:13.796Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li>第一步： 打开你的目录</li><li>第二步： Shift + 右键</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ul&gt;
+&lt;li&gt;第一步： 打开你的目录&lt;/li&gt;
+&lt;li&gt;第二步： Shift + 右键&lt;/li&gt;
+&lt;/ul&gt;
+
+      
+    
+    </summary>
+    
+    
+    
+      <category term="windows" scheme="http://yoursite.com/tags/windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo上传的图片在网页上无法显示的解决办法</title>
+    <link href="http://yoursite.com/2019/06/01/Hexo%E4%B8%8A%E4%BC%A0%E7%9A%84%E5%9B%BE%E7%89%87%E5%9C%A8%E7%BD%91%E9%A1%B5%E4%B8%8A%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>http://yoursite.com/2019/06/01/Hexo上传的图片在网页上无法显示的解决办法/</id>
+    <published>2019-06-01T13:46:59.000Z</published>
+    <updated>2019-10-05T08:57:56.124Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>hexo 建立的博客，想传图片进去，就在source目录下面创建了一个image发现不行，然后又在头像的目录下面创建了一个sorimg的目录，把图片放进去了，这次运行起来主页终于有图片了，可是当点进“展开全文”的标签时，内容页图片丢失..<br>想要完美的插入一张图片</p><a id="more"></a><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><ol><li>找到你自己博客根目录下的_config.yml里的post_asset_folder，把这个选项从false改成true。<br><code>post_asset_folder: true</code></li><li>根目录下下载 上传图片的插件，运行npm（或者cnpm）<br><code>npm install hexo-asset-image --save</code></li><li>创建你的文章，就会发现现在的source目录下面不只有md文件，还会多出来一个文件夹<br><code>PS C:\Users\GSS\git\chi-bin_bo&gt; hexo new &quot;windows 当前目录下打开控制台&quot;</code><br><img src="/2019/06/01/Hexo上传的图片在网页上无法显示的解决办法/a.png" alt="开始的地方"></li><li>把想要添加的图片放进该文件夹中，md中如下调用<br><code>![alt](a.png)</code></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;hexo 建立的博客，想传图片进去，就在source目录下面创建了一个image发现不行，然后又在头像的目录下面创建了一个sorimg的目录，把图片放进去了，这次运行起来主页终于有图片了，可是当点进“展开全文”的标签时，内容页图片丢失..&lt;br&gt;想要完美的插入一张图片&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我的第一次博客</title>
+    <link href="http://yoursite.com/2019/05/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://yoursite.com/2019/05/31/我的第一次博客/</id>
+    <published>2019-05-31T13:36:40.000Z</published>
+    <updated>2019-10-05T08:55:22.691Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="创建博客的原因"><a href="#创建博客的原因" class="headerlink" title="创建博客的原因"></a>创建博客的原因</h3><p> 平时可能不管是写代码或者是搭建环境的时候，甚至是装个软件的时候可能都会有各种各样的问题，这一次解决了可能下一次就又忘记了，所以每次解决问题的时候都看别人的博客，就起了想要自己写博客的念头。</p><a id="more"></a><h3 id="可能包括的内容"><a href="#可能包括的内容" class="headerlink" title="可能包括的内容"></a>可能包括的内容</h3><p>可能有一些我觉得很有趣的思路或是过程，可能是一些配置环境的搭建问题，或者是我想到什么就瞎写一通，杂七杂八，谁知道呢</p><p>海涵了诸位<br><img src="/2019/05/31/我的第一次博客/avator.jpg" alt="开始的地方"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;创建博客的原因&quot;&gt;&lt;a href=&quot;#创建博客的原因&quot; class=&quot;headerlink&quot; title=&quot;创建博客的原因&quot;&gt;&lt;/a&gt;创建博客的原因&lt;/h3&gt;&lt;p&gt; 平时可能不管是写代码或者是搭建环境的时候，甚至是装个软件的时候可能都会有各种各样的问题，这一次解决了可能下一次就又忘记了，所以每次解决问题的时候都看别人的博客，就起了想要自己写博客的念头。&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="随笔" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+</feed>

@@ -6,17 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>吃饼的个人博客</title>
+  <title>Chi-bin·blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="吃饼的个人博客">
+  <meta name="keywords" content="后端开发">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chi-bin·blog">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="吃饼的个人博客">
+<meta property="og:site_name" content="Chi-bin·blog">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="吃饼的个人博客">
-  
-    <link rel="alternative" href="/atom.xml" title="吃饼的个人博客" type="application/atom+xml">
+<meta name="twitter:title" content="Chi-bin·blog">
   
   
     <link rel="icon" href="/favicon.png">
@@ -46,8 +45,10 @@
 			<img src="/assets/img/avator.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">吃饼</a></h1>
+		  <h1 class="header-author"><a href="/">chi-bin</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">望着山川河流擎烛而走</p>
 		
 
 		<nav class="header-menu">
@@ -75,11 +76,11 @@
 				
 					<a class="github" target="_blank" href="https://github.com/chi-bin" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+					<a class="weibo" target="_blank" href="https://weibo.com/u/5241037929?is_all=1" title="weibo"><i class="icon-weibo"></i></a>
 		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+					<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
 		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/ge-shuai-shuai-25/activities" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
 					<a class="mail" target="_blank" href="mailto:1787040716@qq.com" title="mail"><i class="icon-mail"></i></a>
 		        
@@ -102,8 +103,10 @@
 				<img src="/assets/img/avator.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">吃饼</h1>
+			  <h1 class="header-author js-header-author">chi-bin</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>望着山川河流擎烛而走<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -118,11 +121,11 @@
 					
 						<a class="github" target="_blank" href="https://github.com/chi-bin" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+						<a class="weibo" target="_blank" href="https://weibo.com/u/5241037929?is_all=1" title="weibo"><i class="icon-weibo"></i></a>
 			        
-						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+						<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
 			        
-						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/ge-shuai-shuai-25/activities" title="zhihu"><i class="icon-zhihu"></i></a>
 			        
 						<a class="mail" target="_blank" href="mailto:1787040716@qq.com" title="mail"><i class="icon-mail"></i></a>
 			        
@@ -173,23 +176,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h1><p>今天打算梳理一下我所了解的排序算法，不同的排序算法所拥有的时间复杂度，空间复杂度，是否稳定，都不一样，所以在不同的情况下有不同的应用场景，做个大概的总结。</p>
-<h2 id="冒泡"><a href="#冒泡" class="headerlink" title="冒泡"></a>冒泡</h2><ul>
-<li>基本思想：把最小的元素或是最大的元素，依次放到数组的最右边，直到全部有序，每次比较发现不符合排序规则，就进行交换</li>
-<li>时间复杂度：O(n^2),平方阶</li>
-<li>稳定性：是</li>
-<li>代码(升序排列)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bubblesort</span><span class="params">(<span class="keyword">int</span>[] a)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a.length-<span class="number">1</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;a.length-<span class="number">1</span>-i;j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[j]&gt;a[j+<span class="number">1</span>])&#123;</span><br><span class="line">				<span class="keyword">int</span> temp=a[j+<span class="number">1</span>];</span><br><span class="line">				a[j+<span class="number">1</span>]=a[j];</span><br><span class="line">				a[j]=temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="快速排序（冒泡的升级版本）"><a href="#快速排序（冒泡的升级版本）" class="headerlink" title="快速排序（冒泡的升级版本）"></a>快速排序（冒泡的升级版本）</h2><ul>
-<li>基本思想：通过一趟排序，把数组分成两个部分，其中一部分比另一部分都小，然后再分别以这两个部分为基础部分进行递归，直到退出的时候，就是有序的。</li>
-<li>时间复杂度：平均和最优的情况都是线性对数阶 O(nlogn)，最坏的情况是O(n^2)</li>
-<li>稳定性：否</li>
-<li>代码(升序排列)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quicksort</span><span class="params">(<span class="keyword">int</span>[] a,<span class="keyword">int</span> left,<span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> l=left;</span><br><span class="line">	<span class="keyword">int</span> r=right;</span><br><span class="line">	<span class="keyword">int</span> mid=(l+r)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">while</span>(l&lt;r)&#123;<span class="comment">//当左边的标志比右边的小的时候继续循环，直到会面</span></span><br><span class="line">		<span class="keyword">while</span>(l&lt;a[mid])&#123;l++;&#125;<span class="comment">//在左边找到一个比中间值大的数</span></span><br><span class="line">		<span class="keyword">while</span>(r&gt;a[mid])&#123;r--;&#125;<span class="comment">//在右边找到一个比中间值小的数</span></span><br><span class="line">		<span class="keyword">if</span>(l&gt;=r)&#123;</span><br><span class="line">			<span class="keyword">break</span>;<span class="comment">//当左边的标志大于右边的时候，说明分好了两个部分</span></span><br><span class="line">		&#125;<span class="comment">//没做就是还没有分好，并且找到了这样的两个数</span></span><br><span class="line">		<span class="keyword">int</span> temp=a[l];<span class="comment">//交换</span></span><br><span class="line">		a[l]=a[r];</span><br><span class="line">		a[r]=temp;</span><br><span class="line">		<span class="keyword">if</span>(a[l]==a[mid])&#123;r--;&#125;<span class="comment">//发现交换之后，左边与中值相等，右边就左移一位</span></span><br><span class="line">		<span class="keyword">if</span>(a[r]==a[mid])&#123;l++;&#125;<span class="comment">//右边与中值相等，就把左边右移一位</span></span><br><span class="line">	&#125;<span class="comment">//做完之后就分成了连个部分。然后把这两个部分作为基础部分再次递归</span></span><br><span class="line">	<span class="keyword">if</span>(l==r)&#123;<span class="comment">//中间的这个值，实际上已经是两个部分的中值了，既已经可以认定是有序的了，所以可以不进递归</span></span><br><span class="line">		l++;	<span class="comment">//预防了两边的冲突</span></span><br><span class="line">		r--;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(l&lt;right)&#123;quicksort(a,l,right);&#125;</span><br><span class="line">	<span class="keyword">if</span>(r&gt;left)&#123;quicksort(a,left,r);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-
+        
       
 
       
@@ -262,17 +249,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。"><a href="#servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。" class="headerlink" title="servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。"></a>servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。</h3><h3 id="首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，"><a href="#首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，" class="headerlink" title="首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，"></a>首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，</h3><h3 id="Java-Servlet-是运行在带有支持-Java-Servlet-规范的解释器的-web-服务器上的-Java-类。"><a href="#Java-Servlet-是运行在带有支持-Java-Servlet-规范的解释器的-web-服务器上的-Java-类。" class="headerlink" title="Java Servlet 是运行在带有支持 Java Servlet 规范的解释器的 web 服务器上的 Java 类。"></a>Java Servlet 是运行在带有支持 Java Servlet 规范的解释器的 web 服务器上的 Java 类。</h3><ol>
-<li>Servlet 可以使用 javax.servlet 和 javax.servlet.http 包创建，它是 Java 企业版的标准组成部分，Java 企业版是支持大型开发项目的 Java 类库的扩展版本。</li>
-<li>这些类实现 Java Servlet 和 JSP 规范。在写本教程的时候，二者相应的版本分别是 Java Servlet 2.5 和 JSP 2.1。</li>
-<li>Java Servlet 就像任何其他的 Java 类一样已经被创建和编译。在您安装 Servlet 包并把它们添加到您的计算机上的 Classpath 类路径中之后，您就可以通过 JDK 的 Java 编译器或任何其他编译器来编译 Servlet。<h3 id="Java-Servlet-通常情况下与使用-CGI（Common-Gateway-Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于-CGI，Servlet-有以下几点优势："><a href="#Java-Servlet-通常情况下与使用-CGI（Common-Gateway-Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于-CGI，Servlet-有以下几点优势：" class="headerlink" title="Java Servlet 通常情况下与使用 CGI（Common Gateway Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于 CGI，Servlet 有以下几点优势："></a>Java Servlet 通常情况下与使用 CGI（Common Gateway Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于 CGI，Servlet 有以下几点优势：</h3></li>
-<li>性能明显更好。</li>
-<li>Servlet 在 Web 服务器的地址空间内执行。这样它就没有必要再创建一个单独的进程来处理每个客户端请求。</li>
-<li>Servlet 是独立于平台的，因为它们是用 Java 编写的。</li>
-<li>服务器上的 Java 安全管理器执行了一系列限制，以保护服务器计算机上的资源。因此，Servlet 是可信的。</li>
-<li>Java 类库的全部功能对 Servlet 来说都是可用的。它可以通过 sockets 和 RMI 机制与 applets、数据库或其他软件进行交互。</li>
-</ol>
-
+        <h2 id="servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。"><a href="#servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。" class="headerlink" title="servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。"></a>servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。</h2>
+        
       
 
       
@@ -346,37 +324,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="流程图解"><a href="#流程图解" class="headerlink" title="流程图解"></a>流程图解</h2><p><img src="/2019/09/27/SpringMvc学习总结/SpringMvc%E6%B5%81%E7%A8%8B.png" alt="图解"></p>
-<h3 id="流程详解"><a href="#流程详解" class="headerlink" title="流程详解"></a>流程详解</h3><ol>
-<li>客户端发送请求到DispatcherServlet(拦截器)</li>
-</ol>
-<ul>
-<li><p>要了解为什么DispatcherServlet可以拦截所有的请求和底层，就要先了解servlet是什么。<a href="/serlet大概">servlet大概</a><br><img src="/2019/09/27/SpringMvc学习总结/diceng.png" alt="DispatcherServlet"></p>
-</li>
-<li><p>而继承了HTTPServlet的DispatcherServlet，在其父类FrameWorkServlet中实现了HTTPServlet的doGet，doPost等方法，代码实现如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    processRequest(request, response);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    processRequest(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>因为实现了这些方法，所以拦截器DispatcherServlet可以拦截所有的请求。</p>
-</li>
-</ul>
-<ol start="2">
-<li>DispatcherServlet根据请求信息调用HandlerMapping，解析请求对应的Handler或是controller。返回一个Handler或是controller。</li>
-</ol>
-<ul>
-<li>因为有次面试被为什么给折磨到崩裂开来，现在碰到这种问题，我都要问问自己为什么<br><img src="/2019/09/27/SpringMvc学习总结/handelermapping.png" alt="HandlerMapping"><br>SimpleUrlHandlerMapping类通过配置文件把url映射到Controller类<br>DefaultAnnotationHandlerMapping通过注解把URL映射到Controller类</li>
-</ul>
-<ol start="3">
-<li>解析到对应的Handler或者是controller后开始由HandlerAdapter适配器处理。帮助DispatcherServlet处理映射请求处理程序的适配器。他的作用是根据HandlerMapping返回的Handler对象（controller对象）然后去适配具体的方法。<br><img src="/2019/09/27/SpringMvc学习总结/HandlerAdapter.png" alt="HandlerAdapter"><br>AnnotationMethodHandlerAdapter：通过注解，把请求URL映射到Controller类的方法上。</li>
-</ol>
-<p>4.处理器完成任务了之后，会返回一个ModeAndView对象，Mode是返回的数据对象，而view是逻辑上的view。</p>
-<ul>
-<li>什么是modeAndview呢？<br>ModelAndView是Spring中标准的类，完全是Spring自己封装的对象。<br>实际上是两个部分一个是view，在我的理解来看就是一个标识id的作用，用来告知viewResolver去哪里找到view文件。而Mode由addObject()来决定的，他的本质是HashMap，键值对；</li>
-</ul>
-<p>5.ViewResolver会根据逻辑上的view来查找实际上的view</p>
-<ul>
-<li>就是根据那个标识id来去查找实际的view。具体怎么实现的呢？<br><img src="/2019/09/27/SpringMvc学习总结/vrs.png" alt="viewResolver"><br>首先InternalResourceViewResolver extends（继承）了 UrlBasedViewResolver；然后顺便说，把用于显示（view）的jsp文件放在WEB-INF文件夹下是一种安全的做法，这样不能通过url直接access这些jsp，只能通过Controller java类来访问它们。</li>
-</ul>
-<p>6.DispatcherServlet 会根据找到的实际的view然后把mode给它，通过浏览器表达给用户。</p>
-
+        
       
 
       
@@ -449,7 +397,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="打开你的目录"><a href="#打开你的目录" class="headerlink" title="打开你的目录"></a>打开你的目录</h2><h2 id="Shift-右键"><a href="#Shift-右键" class="headerlink" title="Shift + 右键"></a>Shift + 右键</h2>
+        <ul>
+<li>第一步： 打开你的目录</li>
+<li>第二步： Shift + 右键</li>
+</ul>
+
       
 
       
@@ -523,13 +475,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>hexo 建立的博客，想传图片进去，就在source目录下面创建了一个image发现不行，然后又在头像的目录下面创建了一个sorimg的目录，把图片放进去了，这次运行起来主页终于有图片了，可是当点进“展开全文”的标签时，内容页图片丢失..<br>想要完美的插入一张图片</p>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><ol>
-<li>找到你自己博客根目录下的_config.yml里的post_asset_folder，把这个选项从false改成true。<br><code>post_asset_folder: true</code></li>
-<li>根目录下下载 上传图片的插件，运行npm（或者cnpm）<br><code>npm install hexo-asset-image --save</code></li>
-<li>创建你的文章，就会发现现在的source目录下面不只有md文件，还会多出来一个文件夹<br><code>PS C:\Users\GSS\git\chi-bin_bo&gt; hexo new &quot;windows 当前目录下打开控制台&quot;</code><br><img src="/2019/06/01/Hexo上传的图片在网页上无法显示的解决办法/a.png" alt="开始的地方"></li>
-<li>把想要添加的图片放进该文件夹中，md中如下调用<br><code>![alt](a.png)</code></li>
-</ol>
-
+        
       
 
       
@@ -602,11 +548,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<h3 id="创建博客的原因"><a href="#创建博客的原因" class="headerlink" title="创建博客的原因"></a>创建博客的原因</h3><p> 平时可能不管是写代码或者是搭建环境的时候，甚至是装个软件的时候可能都会有各种各样的问题，这一次解决了可能下一次就又忘记了，所以每次解决问题的时候都看别人的博客，就起了想要自己写博客的念头。</p>
-<h3 id="可能包括的内容"><a href="#可能包括的内容" class="headerlink" title="可能包括的内容"></a>可能包括的内容</h3><p>可能有一些我觉得很有趣的思路或是过程，可能是一些配置环境的搭建问题，或者是我想到什么就瞎写一通，杂七杂八，谁知道呢</p>
-<p>海涵了诸位<br><img src="/2019/05/31/我的第一次博客/avator.jpg" alt="开始的地方"></p>
-
+        <h3 id="创建博客的原因"><a href="#创建博客的原因" class="headerlink" title="创建博客的原因"></a>创建博客的原因</h3><p> 平时可能不管是写代码或者是搭建环境的时候，甚至是装个软件的时候可能都会有各种各样的问题，这一次解决了可能下一次就又忘记了，所以每次解决问题的时候都看别人的博客，就起了想要自己写博客的念头。</p>
+        
       
 
       
@@ -669,7 +612,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 吃饼
+    		&copy; 2019 chi-bin
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -765,10 +708,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">SpringMvc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
@@ -777,15 +716,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">SpringMvc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">windows</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构和算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构和算法</a>
               </li>
             
             <div class="clearfix"></div>
