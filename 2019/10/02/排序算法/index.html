@@ -16,10 +16,12 @@
 <meta property="og:site_name" content="Chi-bin·blog">
 <meta property="og:description" content="排序算法今天打算梳理一下我所了解的排序算法，不同的排序算法所拥有的时间复杂度，空间复杂度，是否稳定，都不一样，所以在不同的情况下有不同的应用场景，做个大概的总结。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-05T08:54:42.712Z">
+<meta property="og:image" content="http://yoursite.com/2019/10/02/排序算法/all.png">
+<meta property="og:updated_time" content="2019-10-08T08:43:53.197Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序算法">
 <meta name="twitter:description" content="排序算法今天打算梳理一下我所了解的排序算法，不同的排序算法所拥有的时间复杂度，空间复杂度，是否稳定，都不一样，所以在不同的情况下有不同的应用场景，做个大概的总结。">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/02/排序算法/all.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -183,7 +185,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h1><p>今天打算梳理一下我所了解的排序算法，不同的排序算法所拥有的时间复杂度，空间复杂度，是否稳定，都不一样，所以在不同的情况下有不同的应用场景，做个大概的总结。</p>
+        <h1 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h1><p>今天打算梳理一下我所了解的排序算法，不同的排序算法所拥有的时间复杂度，空间复杂度，是否稳定，都不一样，所以在不同的情况下有不同的应用场景，做个大概的总结。<br><img src="/2019/10/02/排序算法/all.png" alt="排序算法"></p>
 <a id="more"></a>
 <h2 id="冒泡"><a href="#冒泡" class="headerlink" title="冒泡"></a>冒泡</h2><ul>
 <li>基本思想：把最小的元素或是最大的元素，依次放到数组的最右边，直到全部有序，每次比较发现不符合排序规则，就进行交换</li>
@@ -206,6 +208,32 @@
 <li>时间复杂度：最优:O(n),平均：O(n^2),最差：O(n^2)</li>
 <li>空间复杂度：常数阶</li>
 <li>稳定性：稳定<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertsort</span><span class="params">(<span class="keyword">int</span>[] a)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a.length;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> index=i-<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> val=a[i];</span><br><span class="line">		<span class="keyword">while</span>((index&gt;=<span class="number">0</span>)&amp;&amp;val&lt;a[index])&#123;</span><br><span class="line">			a[index+<span class="number">1</span>]=a[index];</span><br><span class="line">			index--;</span><br><span class="line">		&#125;</span><br><span class="line">		a[index+<span class="number">1</span>]=val;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="希尔排序（插入排序增强版）"><a href="#希尔排序（插入排序增强版）" class="headerlink" title="希尔排序（插入排序增强版）"></a>希尔排序（插入排序增强版）</h2><ul>
+<li>基本思想：通过解决较小的数要比较较多次的问题，设置增量多次插入排序，得到较好地时间复杂度</li>
+<li>时间复杂度：最坏：O(n^    2),平均复杂度O(n^1.3),实际应用的事务中，希尔排序的效率还是很高的</li>
+<li>空间复杂度：常数阶</li>
+<li>稳定性 :不稳定<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shell</span><span class="params">(<span class="keyword">int</span>[] a)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> gap=a.length/<span class="number">2</span>;gap&gt;<span class="number">0</span>;gap/=<span class="number">2</span>)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=gap;i&lt;a.length;a++)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i-gap;j&gt;=<span class="number">0</span>;j-=gap) &#123;</span><br><span class="line">				<span class="keyword">if</span>(a[j]&gt;a[j+gap]) &#123;</span><br><span class="line">					temp=a[j];</span><br><span class="line">					a[j]=a[j+gap];</span><br><span class="line">					a[j+gap]=temp;</span><br><span class="line">					&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><ul>
+<li>基本思想：每次选择当前未排序的序列中最小的元素放在已排好序列的最后</li>
+<li>时间复杂度：最坏和平均：O(n^2)，最好：线性阶</li>
+<li>空间复杂度常数阶</li>
+<li>稳定性：不稳定<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selectsort</span><span class="params">(<span class="keyword">int</span>[] a)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a.length-<span class="number">1</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> index=i;</span><br><span class="line">		<span class="keyword">int</span> min=a[i];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;a.length;j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[j]&lt;min)&#123;</span><br><span class="line">				min=a[j];</span><br><span class="line">				index=j;</span><br><span class="line">			&#125;</span><br><span class="line">			a[index]=a[i]</span><br><span class="line">			a[i]=min;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="堆排序（选择排序的加强版）"><a href="#堆排序（选择排序的加强版）" class="headerlink" title="堆排序（选择排序的加强版）"></a>堆排序（选择排序的加强版）</h2><ul>
+<li>基本思想：使用大顶堆或是小顶堆的思想来优化选择排序中的选择部分<br>  首先，把数组思维化一颗数，则第i个元素的两个子节点分别是2k+1,2k+2</li>
+</ul>
+<ul>
+<li>时间复杂度：最好最坏平均：线性对数阶O(nlog2 N)</li>
+<li>空间复杂度：常数阶</li>
+<li>稳定性：不稳定<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/    * 主方法，负责  </span><br><span class="line">	 * 调成一个大顶堆，交换，调整*/</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapsort</span><span class="params">(<span class="keyword">int</span>[] a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> temp=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=a.length/<span class="number">2</span>-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--) &#123;<span class="comment">//传进来之后，首先调成一个大顶堆</span></span><br><span class="line">			adjustheap(a,i,a.length);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=a.length-<span class="number">1</span>;j&gt;<span class="number">0</span>;j--) &#123;</span><br><span class="line">			temp=a[j];					  <span class="comment">//把堆顶放到数组末尾</span></span><br><span class="line">			a[j]=a[<span class="number">0</span>];</span><br><span class="line">			a[<span class="number">0</span>]=temp;</span><br><span class="line">			adjustheap(a,<span class="number">0</span>,j);			  <span class="comment">//最后的已经有序元素下标是j，堆最后的元素下标为j-1,堆的长度是j</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**完成将以i指向的节点为根节点的树调整成大顶堆</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> i表示非叶子节点在数组中的索引</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> alength表示对多少个元素(堆的长度)进行调整，alength在实际的生产环境中是在不断地减少</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">adjustheap</span><span class="params">(<span class="keyword">int</span>[] a,<span class="keyword">int</span> i,<span class="keyword">int</span> alength)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> temp=a[i];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">2</span>*i+<span class="number">1</span>;k&lt;alength;k=k*<span class="number">2</span>+<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span>(k+<span class="number">1</span>&lt;alength&amp;&amp;a[k]&lt;a[k+<span class="number">1</span>]) &#123;</span><br><span class="line">			k++;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[k]&gt;temp) &#123;</span><br><span class="line">			a[i]=a[k];</span><br><span class="line">			i=k;</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//当结束了 循环之后，已经局部完成了大顶堆</span></span><br><span class="line">		a[i]=temp;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -321,7 +349,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#排序算法"><span class="toc-number">1.</span> <span class="toc-text">排序算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#冒泡"><span class="toc-number">1.1.</span> <span class="toc-text">冒泡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速排序（冒泡的升级版本）"><span class="toc-number">1.2.</span> <span class="toc-text">快速排序（冒泡的升级版本）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入排序"><span class="toc-number">1.3.</span> <span class="toc-text">插入排序</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#排序算法"><span class="toc-number">1.</span> <span class="toc-text">排序算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#冒泡"><span class="toc-number">1.1.</span> <span class="toc-text">冒泡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速排序（冒泡的升级版本）"><span class="toc-number">1.2.</span> <span class="toc-text">快速排序（冒泡的升级版本）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入排序"><span class="toc-number">1.3.</span> <span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#希尔排序（插入排序增强版）"><span class="toc-number">1.4.</span> <span class="toc-text">希尔排序（插入排序增强版）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择排序"><span class="toc-number">1.5.</span> <span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#堆排序（选择排序的加强版）"><span class="toc-number">1.6.</span> <span class="toc-text">堆排序（选择排序的加强版）</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -452,11 +480,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">SpringMvc</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构和算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
+                <a href="javascript:void(0)" class="js-tag color5">SpringMvc</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,11 +492,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构和算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
               </li>
             
             <div class="clearfix"></div>
