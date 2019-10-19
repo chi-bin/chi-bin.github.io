@@ -8,14 +8,14 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Redis学习篇 | Chi-bin·blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="JavaEE,Redis,NoSQL">
+  <meta name="keywords" content="Redis,JavaEE,NoSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis学习篇">
 <meta property="og:url" content="http://yoursite.com/2019/10/17/Redis学习篇/index.html">
 <meta property="og:site_name" content="Chi-bin·blog">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/17/Redis学习篇/cat.jpg">
-<meta property="og:updated_time" content="2019-10-17T11:31:36.978Z">
+<meta property="og:updated_time" content="2019-10-19T09:11:54.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis学习篇">
 <meta name="twitter:image" content="http://yoursite.com/2019/10/17/Redis学习篇/cat.jpg">
@@ -191,6 +191,20 @@
 </li>
 </ul>
 <p><strong>响应快速</strong>：Redis的响应速度很快，每秒钟可以执行大约110000个写入操作，或是81000个读取操作，速度远超数据库。如果存入一些常用的数据，就可以有效地提高系统的效率。<br><strong>支持6种数据类型</strong>:它们是字符串，哈希结构，列表，集合，可排序集合和基数。<br><strong>操作都是原子性的</strong>:所有的操作都是原子性的，从而可以保证连个客户同时访问Redis服务器的时候，得到的是更新后的值。需要高并发的场合可以考虑使用redis的事务处理一些需要锁的业务。<br><strong>MultiUtility</strong>:Redis可以在像缓存，消息传递队列中使用，在应用程序像web应用会话，网站页面点击等短暂的数据中使用。</p>
+<ul>
+<li>先来 做一个小场景的讨论</li>
+<li>现在要实现一个抢购的需求，那么为了满足高并发，肯定率先想到了使用Redis来进行存储货物的余量，但是怎么解决超卖的问题呢？</li>
+</ul>
+<ol>
+<li>把该字段设置成unsigned</li>
+<li>使用Redis中的散列，每次来一个请求就pop一个</li>
+<li>用单例模式创建库存的对象</li>
+<li>使用阻塞队列。</li>
+</ol>
+<ul>
+<li>还没有进去学习，等到学习了之后希望能得到一个很有用的答案吧</li>
+<li></li>
+</ul>
 
       
 
@@ -204,11 +218,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JavaEE</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JavaEE</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -451,15 +465,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaEE</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaEE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -487,10 +501,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -499,11 +509,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
             
             <div class="clearfix"></div>

@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Chi-bin·blog">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/16/深入nginx/nginx.jpg">
-<meta property="og:updated_time" content="2019-10-16T13:40:38.590Z">
+<meta property="og:updated_time" content="2019-10-19T13:04:43.543Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入nginx">
 <meta name="twitter:image" content="http://yoursite.com/2019/10/16/深入nginx/nginx.jpg">
@@ -183,6 +183,37 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/2019/10/16/深入nginx/nginx.jpg" alt="nginx"></p>
+<a id="more"></a>
+<h1 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h1><ul>
+<li>cacheloader</li>
+<li>master</li>
+<li>worker</li>
+</ul>
+<h1 id="反向代理（Reverse-Proxy）："><a href="#反向代理（Reverse-Proxy）：" class="headerlink" title="反向代理（Reverse Proxy）："></a>反向代理（Reverse Proxy）：</h1><pre><code>什么是反向代理呢？本人最直接的理解是 将外部的请求，通过 Nginx 软件转向内部请求当中，并响应相关请求。Nginx接收外部的连接请求，然后将请求转发给内部服务器，并将结果反馈请求客户端，此时代理服务器的表现为一个反向代理服务器。目的就是为了真实的内部服务器不能直接外部网络访问。代理服务器的前提条件是该服务器能被外部网络访问的同时又跟真实服务器在同一个网络环境。</code></pre><p>反向代理简单配置方式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">　　listen　　80;</span><br><span class="line"></span><br><span class="line">　　server_name　　localhost;</span><br><span class="line"></span><br><span class="line">　　client_max_body_size 1024M;</span><br><span class="line"></span><br><span class="line">　　location / &#123;</span><br><span class="line"></span><br><span class="line">　　　　proxy_pass　　http://localhost:8080;</span><br><span class="line"></span><br><span class="line">　　　　proxy_set_header Host $host:$server:$server_port;</span><br><span class="line"></span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><ul>
+<li><p>2台或以上的应用服务器时，根据相应规则将请求分发到某台服务器上处理。负载均衡配置一般都需要跟反向代理同时配置，通过反向代理跳转到负载均衡。（目前负载均衡的技术点：硬件层面有F5负载均衡器，网络层层面有LVS(Linux Virtual Server)，应用层层面就是nginx、Haproxy等。）</p>
+</li>
+<li><p>常用的 Nginx 负载均衡策略（RR（默认）、轮询、ip_hash，fair、url_hash）：</p>
+</li>
+<li><p>RR:一台一台轮着来。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">upstream test &#123;</span><br><span class="line"></span><br><span class="line">　　server 192.168.1.22:8080;</span><br><span class="line">　　server 192.168.1.23:8080;</span><br><span class="line">&#125;</span><br><span class="line">server　　&#123;　</span><br><span class="line"></span><br><span class="line">　　listen　　80;</span><br><span class="line"></span><br><span class="line">　　server_name localhost;</span><br><span class="line"></span><br><span class="line">　　client_max_size 1024;</span><br><span class="line"></span><br><span class="line">　　location / &#123;</span><br><span class="line"></span><br><span class="line">　　　　proxy_pass http://test;</span><br><span class="line"></span><br><span class="line">　　　　proxy_set header  Host  $host:$server:$server_post;</span><br><span class="line"></span><br><span class="line">　　　　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>轮询策略：<br>　　RR （默认）:upstream按照轮询（默认）方式进行负载，每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。虽然这种方式简便、成本低廉。但缺点是：可靠性低和负载分配不均衡。<br>　　weight(按权重轮询):指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况而设定。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">upstream test &#123;</span><br><span class="line">   server 192.168.1.22 weight = 6； ---将 60% 的请求分配到该服务器中 </span><br><span class="line">   server 192.168.1.23 weight = 4； ---将 40% 的请求分配到该服务器中</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ip_hash方式：<br>每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。配置只需要在upstream中加入”ip_hash;”即可。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream test &#123;</span><br><span class="line">　　ip_hash;</span><br><span class="line">　　server 192.168.1.22:8080;</span><br><span class="line">　　server 192.168.1.23 8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>far方式（第三方）<br>按后端服务器的响应时间来分配请求，响应时间短的优先分配。与weight分配策略类似。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream test &#123;</span><br><span class="line">　　far;</span><br><span class="line">　　server 192.168.1.22:8080;</span><br><span class="line">　　server 192.168.1.23 8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>url_hash（第三方）<br> 按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。 在upstream中加入hash语句，server语句中不能写入weight等其他的参数，hash_method是使用的hash算法。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">upstream test &#123;</span><br><span class="line">　hash $request_url;</span><br><span class="line">　　hash_method crc32;</span><br><span class="line"></span><br><span class="line">　　server 192.168.1.22:8080;</span><br><span class="line">　　server 192.168.1.23 8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
 
       
 
@@ -304,7 +335,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#主要模块"><span class="toc-number">1.</span> <span class="toc-text">主要模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#反向代理（Reverse-Proxy）："><span class="toc-number">2.</span> <span class="toc-text">反向代理（Reverse Proxy）：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#负载均衡"><span class="toc-number">3.</span> <span class="toc-text">负载均衡</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -435,15 +466,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaEE</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaEE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,10 +502,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -483,11 +510,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
             
             <div class="clearfix"></div>

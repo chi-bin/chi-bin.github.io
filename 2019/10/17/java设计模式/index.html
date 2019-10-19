@@ -8,18 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>java设计模式 | Chi-bin·blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="坐等一张图">
-<meta name="keywords" content="java">
+  <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java设计模式">
 <meta property="og:url" content="http://yoursite.com/2019/10/17/java设计模式/index.html">
 <meta property="og:site_name" content="Chi-bin·blog">
-<meta property="og:description" content="坐等一张图">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-18T03:19:16.037Z">
+<meta property="og:image" content="http://yoursite.com/2019/10/17/java设计模式/meat.jpg">
+<meta property="og:updated_time" content="2019-10-19T08:42:29.366Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java设计模式">
-<meta name="twitter:description" content="坐等一张图">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/17/java设计模式/meat.jpg">
   
   
     <link rel="icon" href="/favicon.png">
@@ -183,7 +182,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>坐等一张图</em></p>
+        <p><img src="/2019/10/17/java设计模式/meat.jpg" alt="设计模式"></p>
 <a id="more"></a>
 <h1 id="Java设计模式"><a href="#Java设计模式" class="headerlink" title="Java设计模式"></a>Java设计模式</h1><h2 id="java反射技术"><a href="#java反射技术" class="headerlink" title="java反射技术"></a>java反射技术</h2><ul>
 <li>java反射技术的应用十分广泛，它可以配置：类的全限定名，方法，和参数，完成对象的初始化，甚至是反射某些方法，IOC的基本原理也是基于反射。</li>
@@ -273,6 +272,18 @@
 <li>解决可能一种对象有太多种不同的表现形式不好使用工厂或是new的问题</li>
 <li>通过一步一步构建个体对象而把整体对象构建出来。</li>
 </ul>
+<p><strong>单例模式</strong></p>
+<ul>
+<li>就是一个类只有一个实例</li>
+<li>单例类必须自己创建自己的实例</li>
+<li>单例类必须为其他对象提供唯一的实例</li>
+<li><strong>好处</strong>：节省内存，方便垃圾回收。</li>
+<li>它可以保证一个类只有一个实例，并且提供全局访问点。</li>
+<li>懒汉式：只有在有对象要访问的时候才会创建实例。</li>
+<li>饿汉式：一开始就创建。</li>
+<li>什么情况下使用单例模式：控制资源的使用。通过线程同步的方式来控制资源的并发访问。节约资源，通信媒介。</li>
+<li>实际上，配置信息类、管理类、控制类、门面类、代理类通常被设计为单例类。像Java的Struts、Spring框架，.Net的Spring.Net框架，以及Php的Zend框架都大量使用了单例模式。</li>
+</ul>
 
       
 
@@ -355,6 +366,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/10/19/SQL学习篇/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          SQL基础学习篇
+        
+      </div>
+    </a>
   
   
     <a href="/2019/10/17/Redis学习篇/" id="article-nav-older" class="article-nav-link-wrap">
@@ -516,15 +536,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaEE</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaEE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -552,10 +572,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -564,11 +580,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
             
             <div class="clearfix"></div>

@@ -16,7 +16,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/09/java内存模型/mei.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/10/09/java内存模型/jvm.jpg">
-<meta property="og:updated_time" content="2019-10-17T08:33:26.502Z">
+<meta property="og:updated_time" content="2019-10-19T13:19:04.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java内存模型">
 <meta name="twitter:image" content="http://yoursite.com/2019/10/09/java内存模型/mei.jpg">
@@ -194,6 +194,28 @@
 <li>方法区：属于共享内存区域，存储已经被虚拟机加载的类信息，常量，静态变量，即时编译器编译后的代码等数据。</li>
 <li>运行时常量池：方法区的一部分，用于存放编译期生成的各种字面量和符号引用，编译期和运行期（Sting的intern（）都可以将常量放到内存中）</li>
 </ol>
+<h1 id="java类加载机制"><a href="#java类加载机制" class="headerlink" title="java类加载机制"></a>java类加载机制</h1><ol>
+<li>类加载器作用<br>类加载器本身作用就是用于加载类的，将类转换成java.lang.Class的实例；类加载器是通过类的全限定名来获取类的二进制字节流进而实现加载类。当我们比较两个类是否相等的时候，首先必须要确认是否由同一个类加载器加载，否则就算是使用相同class文件，被不同加载器加载比较结果还是不相等的。（相等可以指equals方法、isAssignableFrom方法、isInstance方法、instanceof方法等）。</li>
+<li>有哪些</li>
+</ol>
+<ul>
+<li><p><strong>BootStrap ClassLoader</strong>：称为启动类加载器，是Java类加载层次中最顶层的类加载器，负责加载JDK中的核心类库，如：rt.jar、resources.jar、charsets.jar等。</p>
+</li>
+<li><p><strong>Extension ClassLoader</strong>：称为扩展类加载器，负责加载Java的扩展类库，默认加载JAVA_HOME/jre/lib/ext/目下的所有jar。</p>
+</li>
+<li><p><strong>App ClassLoader</strong>：称为系统类加载器，负责加载应用程序classpath目录下的所有jar和class文件。</p>
+</li>
+<li><p><strong>CustomClassLoader</strong>： 用户自定义类加载器，对于用户自定义的加载器，不管你是直接实现ClassLoader,还是继承URLClassLoader,或者其他的子类。它的父类加载器都是AppClassLoader ，因为不管调用哪个父类构造器，创建的对象都必须最终调用getSystemClassLoader()作为父加载器，而getSystemClassLoader()方法获取到的正是AppClassLoader 。</p>
+</li>
+</ul>
+<ol start="3">
+<li>当JVM运行过程中，用户需要加载某些类时，会按照下面的步骤（父类委托机制）：</li>
+</ol>
+<ul>
+<li>用户自己的类加载器，把加载请求传给父加载器，父加载器再传给其父加载器，一直到加载器树的顶层。</li>
+<li>最顶层的类加载器首先针对其特定的位置加载，如果加载不到就转交给子类。</li>
+<li>如果一直到底层的类加载都没有加载到，那么就会抛出异常ClassNotFoundException。</li>
+</ul>
 
       
 
@@ -315,7 +337,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java类加载机制"><span class="toc-number">1.</span> <span class="toc-text">java类加载机制</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -446,15 +468,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaEE</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaEE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -482,10 +504,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -494,11 +512,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
             
             <div class="clearfix"></div>
