@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>linux命令总结篇 | Chi-bin·blog</title>
+  <title>操作系统复习篇 | Chi-bin·blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="linux">
+  <meta name="keywords" content="计算机">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux命令总结篇">
-<meta property="og:url" content="http://yoursite.com/2019/10/09/linux命令/index.html">
+<meta property="og:title" content="操作系统复习篇">
+<meta property="og:url" content="http://yoursite.com/2019/10/20/操作系统复习篇/index.html">
 <meta property="og:site_name" content="Chi-bin·blog">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/10/09/linux命令/feiji.jpg">
-<meta property="og:updated_time" content="2019-10-16T03:33:15.511Z">
+<meta property="og:image" content="http://yoursite.com/2019/10/20/操作系统复习篇/girls.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/10/20/操作系统复习篇/com.png">
+<meta property="og:updated_time" content="2019-11-16T08:10:02.684Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux命令总结篇">
-<meta name="twitter:image" content="http://yoursite.com/2019/10/09/linux命令/feiji.jpg">
+<meta name="twitter:title" content="操作系统复习篇">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/20/操作系统复习篇/girls.jpg">
   
   
     <link rel="icon" href="/favicon.png">
@@ -162,34 +163,54 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-linux命令" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-操作系统复习篇" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      linux命令总结篇
+      操作系统复习篇
     </h1>
   
 
         
-        <a href="/2019/10/09/linux命令/" class="archive-article-date">
-  	<time datetime="2019-10-09T12:23:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+        <a href="/2019/10/20/操作系统复习篇/" class="archive-article-date">
+  	<time datetime="2019-10-20T06:02:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/2019/10/09/linux命令/feiji.jpg" alt="赛博朋克儿"></p>
+        <p><img src="/2019/10/20/操作系统复习篇/girls.jpg" alt="叫我封皮"></p>
 <a id="more"></a>
-<h2 id="开关机"><a href="#开关机" class="headerlink" title="开关机"></a>开关机</h2><p>1.sync:把内存中的数据写到硬盘中(每次关机之前重启之前都要执行)<br>2.shutdown -r now或rebot:立刻重启<br>3.shutdown -h now：立刻关机<br>4.shutdown -h 20:00 预定时间关机，如果今天过了预定的时间则明天这个时候关机<br>5.shutdown -h +10:预定时间关机，10分钟后关机。<br>6.shutdown -c:取消关机</p>
-<h2 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h2><p>1.who am i:查看当前使用的终端</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@izwz9938t1plpjtmzr7adqz ~]<span class="comment"># who am i</span></span><br><span class="line">root     pts/0        2019-10-09 21:16 (117.152.78.143)</span><br></pre></td></tr></table></figure>
-
-<p>2.who 或 w :查看所有终端<br>3.uname -m:显示机器的处理器架构<br>4.cat/proc/version 查看linux版本信息<br>5.</p>
-
+<p><img src="/2019/10/20/操作系统复习篇/com.png" alt="计算机组成"></p>
+<h1 id="为什么要学习操作系统"><a href="#为什么要学习操作系统" class="headerlink" title="为什么要学习操作系统"></a>为什么要学习操作系统</h1><ul>
+<li>加深对计算机OS的理解，优化编程。可以借鉴计算机os的思路和算法，概念和技巧可以推广到其他领域。</li>
+</ul>
+<h1 id="什么是操作系统"><a href="#什么是操作系统" class="headerlink" title="什么是操作系统"></a>什么是操作系统</h1><ul>
+<li>本质：大型的软件系统。对内负责计算机全部软件，硬件资源的管理，控制和协调并发活动，实现信息的存储和保护。对外，为用户使用计算机提供方便的界面。最终使计算机系统实现高效率和高自动化。</li>
+</ul>
+<h1 id="操作系统特征"><a href="#操作系统特征" class="headerlink" title="操作系统特征"></a>操作系统特征</h1><h2 id="并发性"><a href="#并发性" class="headerlink" title="并发性"></a>并发性</h2><ul>
+<li>指的是两个或者多个事件在同一时间间隔内发生，在多道程序环境下，并发性是指在一段时间内，宏观上有多个程序在同时运行。</li>
+<li>有效的改善了系统的利用率和提高了系统的吞吐量，但它使系统复杂化，操作系统必须具有控制和管理各种并发活动的能力。<h2 id="共享性"><a href="#共享性" class="headerlink" title="共享性"></a>共享性</h2></li>
+<li>操作系统和多个用户是共同使用计算机中的资源的，所以对资源的合理调配是保证并发执行有效的重要的前提。</li>
+<li>互斥共享方式：系统中的某些资源像是打印机，磁带机等等因为结果不能混乱，所以一段时间内只允许一个进程访问该资源。这种资源我们一般叫做临界资源或者是独占资源。</li>
+<li>同时访问的方式：允许一段时间内多个进程同时访问（宏观上）<h2 id="虚拟性"><a href="#虚拟性" class="headerlink" title="虚拟性"></a>虚拟性</h2></li>
+<li>把一个物理上的设备，转换成若干个逻辑上的对应物。</li>
+<li>用于实现虚拟的技术，叫做虚拟技术</li>
+<li>OS中如虚拟处理机，虚拟内存，虚拟外部设备和虚拟信道等。</li>
+</ul>
+<ul>
+<li>虚拟机处理技术：通过多道程序设计技术，让多道程序并发执行的方法</li>
+<li>虚拟存储器技术：通过这个技术，把物理存储器转成虚拟存储器，以便于从逻辑上来扩充存储器的容量。</li>
+<li>虚拟设备技术：比如虚拟光驱<h2 id="异步性"><a href="#异步性" class="headerlink" title="异步性"></a>异步性</h2></li>
+</ul>
+<ul>
+<li>多道程序的执行，并不是一气呵成的，而是每个进程开始和结束的时间都不确定，不是同步完成的</li>
+</ul>
+<h1 id="操作系统主要功能"><a href="#操作系统主要功能" class="headerlink" title="操作系统主要功能"></a>操作系统主要功能</h1><h2 id="处理机管理"><a href="#处理机管理" class="headerlink" title="处理机管理"></a>处理机管理</h2><h2 id="存储器管理"><a href="#存储器管理" class="headerlink" title="存储器管理"></a>存储器管理</h2><h2 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h2><h2 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h2><h2 id="作业管理"><a href="#作业管理" class="headerlink" title="作业管理"></a>作业管理</h2>
       
 
       
@@ -202,7 +223,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">计算机</a>
         		</li>
       		
 		</ul>
@@ -258,7 +279,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/09/linux命令/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/20/操作系统复习篇/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -272,18 +293,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/10/11/java基础/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/11/16/关于一个令牌验证的框架/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          java基础
+          关于一个令牌验证的框架
         
       </div>
     </a>
   
   
-    <a href="/2019/10/09/java内存模型/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">java内存模型</div>
+    <a href="/2019/10/19/SQL学习篇/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SQL基础学习篇</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -310,7 +331,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开关机"><span class="toc-number">1.</span> <span class="toc-text">开关机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统信息"><span class="toc-number">2.</span> <span class="toc-text">系统信息</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么要学习操作系统"><span class="toc-number">1.</span> <span class="toc-text">为什么要学习操作系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是操作系统"><span class="toc-number">2.</span> <span class="toc-text">什么是操作系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#操作系统特征"><span class="toc-number">3.</span> <span class="toc-text">操作系统特征</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#并发性"><span class="toc-number">3.1.</span> <span class="toc-text">并发性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#共享性"><span class="toc-number">3.2.</span> <span class="toc-text">共享性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟性"><span class="toc-number">3.3.</span> <span class="toc-text">虚拟性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步性"><span class="toc-number">3.4.</span> <span class="toc-text">异步性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#操作系统主要功能"><span class="toc-number">4.</span> <span class="toc-text">操作系统主要功能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#处理机管理"><span class="toc-number">4.1.</span> <span class="toc-text">处理机管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存储器管理"><span class="toc-number">4.2.</span> <span class="toc-text">存储器管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设备管理"><span class="toc-number">4.3.</span> <span class="toc-text">设备管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件管理"><span class="toc-number">4.4.</span> <span class="toc-text">文件管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#作业管理"><span class="toc-number">4.5.</span> <span class="toc-text">作业管理</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>

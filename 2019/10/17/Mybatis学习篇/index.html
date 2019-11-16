@@ -16,7 +16,8 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/17/Mybatis学习篇/mybatis.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/10/17/Mybatis学习篇/zujian.jpg">
-<meta property="og:updated_time" content="2019-10-19T01:41:36.738Z">
+<meta property="og:image" content="http://yoursite.com/2019/10/17/Mybatis学习篇/jilian.jpg">
+<meta property="og:updated_time" content="2019-10-25T09:02:08.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mybatis学习篇">
 <meta name="twitter:image" content="http://yoursite.com/2019/10/17/Mybatis学习篇/mybatis.jpg">
@@ -372,10 +373,8 @@
 
 <hr>
 <h1 id="映射器"><a href="#映射器" class="headerlink" title="映射器"></a>映射器</h1><ul>
-<li><p>在Mybatis应用程序开发中，映射器的开发工作占全部工作的80%</p>
-</li>
-<li><p>话不多说，先来看看有什么<strong>元素</strong></p>
-<table>
+<li>在Mybatis应用程序开发中，映射器的开发工作占全部工作的80%</li>
+<li>话不多说，先来看看有什么<strong>元素</strong><table>
 <thead>
 <tr>
 <th align="center">元素名称</th>
@@ -410,8 +409,8 @@
 </tr>
 </tbody></table>
 </li>
-<li><p>映射器中，select元素代表SQL的select语句，用于查询。在SQL中，select语句是用的最多的语句，强大，复杂，先来看看select元素的配置</p>
-<table>
+</ul>
+<h2 id="映射器中，select元素代表SQL的select语句，用于查询。在SQL中，select语句是用的最多的语句，强大，复杂，先来看看select元素的配置"><a href="#映射器中，select元素代表SQL的select语句，用于查询。在SQL中，select语句是用的最多的语句，强大，复杂，先来看看select元素的配置" class="headerlink" title="映射器中，select元素代表SQL的select语句，用于查询。在SQL中，select语句是用的最多的语句，强大，复杂，先来看看select元素的配置"></a>映射器中，select元素代表SQL的select语句，用于查询。在SQL中，select语句是用的最多的语句，强大，复杂，先来看看select元素的配置</h2><table>
 <thead>
 <tr>
 <th align="center">元素</th>
@@ -485,9 +484,8 @@
 <td align="center">很少使用</td>
 </tr>
 </tbody></table>
-</li>
-<li><p>在实际的工作中用的最多的是id，parameterType，resultType，resultMap，如果要用到缓存还要用到flushCache，useCache,其他都是不常用的功能。</p>
-</li>
+<ul>
+<li>在实际的工作中用的最多的是id，parameterType，resultType，resultMap，如果要用到缓存还要用到flushCache，useCache,其他都是不常用的功能。</li>
 </ul>
 <p><strong>自动映射和驼峰映射</strong></p>
 <ul>
@@ -505,7 +503,7 @@
 <ul>
 <li>Mybatis不仅支持分页，它还内置了一个专门处理分页的类，RowBounds,使用它十分简单，只要给接口增加一个RowBounds参数就行了，但是这个对于小数据量的支持会更好一些，如果是较大的数据查询，那么可以使用分页插件去处理。</li>
 </ul>
-<p><strong>insert</strong></p>
+<h2 id="相关元素"><a href="#相关元素" class="headerlink" title="相关元素"></a>相关元素</h2><p><strong>insert</strong></p>
 <ul>
 <li>语句:<code>insert into role(role_name,note) values(#{rolename},#{note})</code></li>
 <li><strong>主键回填</strong></li>
@@ -526,6 +524,78 @@
 <li>“$”:这种是拼接在sql语句上面的，不咋安全</li>
 <li>“#”:这种是字符串的处理，更加安全，是把后面括号中的数据做了处理的额，可以防止sql注入攻击。</li>
 </ul>
+<h2 id="resultMap元素"><a href="#resultMap元素" class="headerlink" title="resultMap元素"></a>resultMap元素</h2><p><strong>元素的构成</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">idArg</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">arg</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">association</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">collection</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">discriminator</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">case</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">discriminator</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中constructor元素用于配置构造方法。一个pojo可能不存在没有参数的构造方法，可以使用constructor进行配置。假设有一个类RoleBean，不存在没有参数的构造方法，他的构造方法声明是这样的<code>public RoleBean(Integer id,String roleName)</code>,那么就要配置结果集了</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">......</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">idArg</span> <span class="attr">column</span>=<span class="string">"id"</span> <span class="attr">javaType</span>=<span class="string">"int"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">arg</span> <span class="attr">column</span>=<span class="string">"role_name"</span> <span class="attr">javaType</span>=<span class="string">"String"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></span><br><span class="line">	...</span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子Mybatis就会用对应的构造方法来构造pojo了。<br>id元素表示哪个列是主键，允许多个主键，多个主键则称为联合主键。result是配置pojo到SQL列名的映射关系。result和idArg元素的属性如下表</p>
+<table>
+<thead>
+<tr>
+<th align="center">元素名称</th>
+<th align="center">说明</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">property</td>
+<td align="center">映射到列结果的字段或是属性。如果pojo的属性匹配的存在的且与给定的SQL列名是相同的，那么Mybatis就会映射到pojo上</td>
+<td align="center">可以实用导航式的字段，比如访问一个学生对象Student，需要访问学生证的发放日期，可以写成selfcard.issueDate</td>
+</tr>
+<tr>
+<td align="center">column</td>
+<td align="center">对应的是SQL的列</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">javaType</td>
+<td align="center">配置java类型</td>
+<td align="center">可以是特定的类完全限定名或者Mybatis上下文的别名</td>
+</tr>
+<tr>
+<td align="center">jdbcType</td>
+<td align="center">配置数据库类型</td>
+<td align="center">这是一个jdbc的类型，Mybatis已经做了限定，支持大部分常用的数据库类型</td>
+</tr>
+<tr>
+<td align="center">typeHandler</td>
+<td align="center">类型处理器</td>
+<td align="center">允许用特定的处理器来覆盖Mybatis默认的处理器。这就要制定jdbcType和javaType相互转化的规则。</td>
+</tr>
+</tbody></table>
+<p>除此之外还有一些级联设置的相关元素，稍候会详细讨论级联的相关知识<br><strong>使用map存储结果集</strong><br>一般而言，任何select语句都可以使用map存储 <code>&lt;select id=&quot;findColorByNote&quot; parameterType=&quot;String&quot; resultType=&quot;map&quot;&gt; select id,color,note from t_color where note like concat(&#39;%&#39;,#{note},&#39;%&#39;)&lt;/select&gt;</code><br>使用map原则上是可是匹配所有结果集，但是使用map接口就意味着可读性的下降，因为使用Map时要进一步了解map键值的构成和数据类型，所以这不是一种推荐的方式。更多的时候会推荐使用pojo的方式<br><strong>使用pojo存储结果集</strong><br>pojo是最长常用的方式。一方面可以使用自动映射，正如使用resultType一样，但是有的时候需要更为复杂的映射或者级联。这个时候还可以使用select的resultMap 属性配置映射集合，只是使用之前要配置resultmap。</p>
+<h2 id="级联"><a href="#级联" class="headerlink" title="级联"></a>级联</h2><p>目的：实现数据的关联<br>好处：获取数据十分方便<br>坏处：当级联过多的时候，会增加系统的复杂度和耦合性，同时会降低系统的性能，所以当级联超过三层的时候就不应该使用级联了<br><strong>mybatis中的级联</strong><br>Mybatis中的级联分为三种</p>
+<ul>
+<li>鉴别器（discriminator）：它是一个根据某些条件决定采用具体实现类级联的方案，比如体检表要根据性别去区分</li>
+<li>一对一（association）：比如学生证和学生就是一对一的级联关系，</li>
+<li>一对多（collection）：班主任和学生就是一对多的级联<br>值得注意的是，Mybatis没有多对多的级联，因为太过复杂使用困难，而可以使用一对多来代替。<br>下面使用一个案例来说明<br><img src="/2019/10/17/Mybatis学习篇/jilian.jpg" alt="级联案例"><br>分析一下雇员的级联模型：</li>
+<li>该模型是以雇员表为中心得。</li>
+<li>雇员表和工牌表是一对一的关系</li>
+<li>雇员表和员工任务表是一对多的级联关系</li>
+<li>员工任务表和任务表是一对一的级联关系</li>
+<li>每个雇员会有一个体检表，随着雇员表字段性别的取值不同会有不一样的关联表<br>建表代码过程略</li>
+</ul>
+<p><strong>建立pojo</strong></p>
+<ol>
+<li>男女体检表应该继承一个抽象的体检表。getter和setter略，各设置私有的体检属性。<br> 显然这个挂你应该是通过Mybatis的鉴别器去完成的</li>
+<li>设计工牌表和任务表的pojo，工牌表以员工表为核心</li>
+<li>接下来是雇员任务表，是雇员表和任务表的连接点。</li>
+<li>最后是雇员表</li>
+</ol>
+<p><strong>配置映射文件</strong><br>配置映射文件是级联的核心内容，而对于Mapper的接口就不给出了。</p>
+<pre><code class="xml"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"路径"</span> &gt;</span>
+    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"getTask"</span> <span class="attr">parameterType</span>=<span class="string">"long"</span> <span class="attr">resultType</span>=<span class="string">"com.路径.pojo.task"</span>&gt;</span>
+        select id,title,context,note from t_task where id=#{id}
+    <span class="tag">&lt;/<span class="name">select</span>&gt;</span>
+
+
+
+
+
+
+</code></pre>
 
       
 
@@ -651,7 +721,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybatis"><span class="toc-number">1.</span> <span class="toc-text">Mybatis</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#认识一下Mybatis的核心组件"><span class="toc-number">2.</span> <span class="toc-text">认识一下Mybatis的核心组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLSessionFactory"><span class="toc-number">2.1.</span> <span class="toc-text">SQLSessionFactory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期"><span class="toc-number">2.2.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础的就是上面的啦，接下来学习一下Mybatis的配置。我之前用的时候好像都没有配置来着。。。"><span class="toc-number">2.3.</span> <span class="toc-text">基础的就是上面的啦，接下来学习一下Mybatis的配置。我之前用的时候好像都没有配置来着。。。</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybatis配置"><span class="toc-number">3.</span> <span class="toc-text">Mybatis配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#settings："><span class="toc-number">3.1.</span> <span class="toc-text">settings：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typeHandler类型转换器"><span class="toc-number">3.2.</span> <span class="toc-text">typeHandler类型转换器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行环境"><span class="toc-number">3.3.</span> <span class="toc-text">运行环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引入映射器的方法"><span class="toc-number">3.4.</span> <span class="toc-text">引入映射器的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#映射器"><span class="toc-number">4.</span> <span class="toc-text">映射器</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybatis"><span class="toc-number">1.</span> <span class="toc-text">Mybatis</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#认识一下Mybatis的核心组件"><span class="toc-number">2.</span> <span class="toc-text">认识一下Mybatis的核心组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLSessionFactory"><span class="toc-number">2.1.</span> <span class="toc-text">SQLSessionFactory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期"><span class="toc-number">2.2.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础的就是上面的啦，接下来学习一下Mybatis的配置。我之前用的时候好像都没有配置来着。。。"><span class="toc-number">2.3.</span> <span class="toc-text">基础的就是上面的啦，接下来学习一下Mybatis的配置。我之前用的时候好像都没有配置来着。。。</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybatis配置"><span class="toc-number">3.</span> <span class="toc-text">Mybatis配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#settings："><span class="toc-number">3.1.</span> <span class="toc-text">settings：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typeHandler类型转换器"><span class="toc-number">3.2.</span> <span class="toc-text">typeHandler类型转换器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行环境"><span class="toc-number">3.3.</span> <span class="toc-text">运行环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引入映射器的方法"><span class="toc-number">3.4.</span> <span class="toc-text">引入映射器的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#映射器"><span class="toc-number">4.</span> <span class="toc-text">映射器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#映射器中，select元素代表SQL的select语句，用于查询。在SQL中，select语句是用的最多的语句，强大，复杂，先来看看select元素的配置"><span class="toc-number">4.1.</span> <span class="toc-text">映射器中，select元素代表SQL的select语句，用于查询。在SQL中，select语句是用的最多的语句，强大，复杂，先来看看select元素的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关元素"><span class="toc-number">4.2.</span> <span class="toc-text">相关元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#resultMap元素"><span class="toc-number">4.3.</span> <span class="toc-text">resultMap元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#级联"><span class="toc-number">4.4.</span> <span class="toc-text">级联</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -782,10 +852,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
@@ -795,6 +861,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">NoSQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -814,11 +884,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">windows</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">计算机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -826,7 +892,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color3">windows</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -835,6 +901,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
