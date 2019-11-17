@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>java内存模型 | Chi-bin·blog</title>
+  <title>关于maven项目整poi读取excel | Chi-bin·blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="java">
+  <meta name="description" content="关于ssm的maven项目整合poi读取excel   记录一下项目中用到poi读取excel的一次经历吧，防止日后需要 整体思路+ maven方式导入poi相关包 + controller中获取到要上传的文件，转化成输入流。 + 准备一个工具类根据文件后缀名称识别excel版本 + 根据不同的版本采用不同的构造方式得到Workbook对象 + 根据传入的Workbook对象，得到相关的shee">
+<meta name="keywords" content="JavaEE">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java内存模型">
-<meta property="og:url" content="http://yoursite.com/2019/10/09/java内存模型/index.html">
+<meta property="og:title" content="关于maven项目整poi读取excel">
+<meta property="og:url" content="http://yoursite.com/2019/11/17/关于maven项目整poi读取excel/index.html">
 <meta property="og:site_name" content="Chi-bin·blog">
+<meta property="og:description" content="关于ssm的maven项目整合poi读取excel   记录一下项目中用到poi读取excel的一次经历吧，防止日后需要 整体思路+ maven方式导入poi相关包 + controller中获取到要上传的文件，转化成输入流。 + 准备一个工具类根据文件后缀名称识别excel版本 + 根据不同的版本采用不同的构造方式得到Workbook对象 + 根据传入的Workbook对象，得到相关的shee">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/10/09/java内存模型/mei.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/10/09/java内存模型/jvm.jpg">
-<meta property="og:updated_time" content="2019-10-19T13:19:04.115Z">
+<meta property="og:image" content="http://yoursite.com/2019/11/17/关于maven项目整poi读取excel/winter.jpg">
+<meta property="og:updated_time" content="2019-11-17T02:51:55.404Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java内存模型">
-<meta name="twitter:image" content="http://yoursite.com/2019/10/09/java内存模型/mei.jpg">
+<meta name="twitter:title" content="关于maven项目整poi读取excel">
+<meta name="twitter:description" content="关于ssm的maven项目整合poi读取excel   记录一下项目中用到poi读取excel的一次经历吧，防止日后需要 整体思路+ maven方式导入poi相关包 + controller中获取到要上传的文件，转化成输入流。 + 准备一个工具类根据文件后缀名称识别excel版本 + 根据不同的版本采用不同的构造方式得到Workbook对象 + 根据传入的Workbook对象，得到相关的shee">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/17/关于maven项目整poi读取excel/winter.jpg">
   
   
     <link rel="icon" href="/favicon.png">
@@ -163,59 +165,46 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-java内存模型" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-关于maven项目整poi读取excel" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      java内存模型
+      关于maven项目整poi读取excel
     </h1>
   
 
         
-        <a href="/2019/10/09/java内存模型/" class="archive-article-date">
-  	<time datetime="2019-10-09T11:34:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+        <a href="/2019/11/17/关于maven项目整poi读取excel/" class="archive-article-date">
+  	<time datetime="2019-11-17T01:45:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/2019/10/09/java内存模型/mei.jpg" alt="wind"></p>
-<a id="more"></a>
-<p><img src="/2019/10/09/java内存模型/jvm.jpg" alt="jvm"></p>
-<ol>
-<li>程序计数器：线程私有，记录的是正在执行的虚拟机字节码指令的地址。如果执行的是Native方法，则这个计数器的值为（undefined）,这是jvm中唯一一个不会有内存溢出的错误的区域</li>
-<li>虚拟机栈：线程私有，生命周期和线程一致，描述的是java方法的内存模型，每个方法在执行的时候都会创建一个栈帧，用于存储局部变量表操作数栈，动态链接，方法出口等消息，每个方法从调用到执行结束，都是对应着一个栈帧从虚拟机中从入栈到出栈的过程。可能出现的错误：1. StackOverflowError(请求的栈的深度大于虚拟机的规定的栈的深度)2. OutOfMemoryError(虚拟机无法申请到足够的内存)</li>
-<li>java堆：jvm中最大的一块儿，线程共享，主要是存放实例对象和数组。内部可以划分出多个线程私有的分配缓冲区，可以物理上不连续但是逻辑结构上需要连续。</li>
-<li>java本地方法栈：为虚拟机使用到的本地方法服务，也会有StackOverflowError和OutOfMemoryError</li>
-<li>方法区：属于共享内存区域，存储已经被虚拟机加载的类信息，常量，静态变量，即时编译器编译后的代码等数据。</li>
-<li>运行时常量池：方法区的一部分，用于存放编译期生成的各种字面量和符号引用，编译期和运行期（Sting的intern（）都可以将常量放到内存中）</li>
-</ol>
-<h1 id="java类加载机制"><a href="#java类加载机制" class="headerlink" title="java类加载机制"></a>java类加载机制</h1><ol>
-<li>类加载器作用<br>类加载器本身作用就是用于加载类的，将类转换成java.lang.Class的实例；类加载器是通过类的全限定名来获取类的二进制字节流进而实现加载类。当我们比较两个类是否相等的时候，首先必须要确认是否由同一个类加载器加载，否则就算是使用相同class文件，被不同加载器加载比较结果还是不相等的。（相等可以指equals方法、isAssignableFrom方法、isInstance方法、instanceof方法等）。</li>
-<li>有哪些</li>
-</ol>
-<ul>
-<li><p><strong>BootStrap ClassLoader</strong>：称为启动类加载器，是Java类加载层次中最顶层的类加载器，负责加载JDK中的核心类库，如：rt.jar、resources.jar、charsets.jar等。</p>
-</li>
-<li><p><strong>Extension ClassLoader</strong>：称为扩展类加载器，负责加载Java的扩展类库，默认加载JAVA_HOME/jre/lib/ext/目下的所有jar。</p>
-</li>
-<li><p><strong>App ClassLoader</strong>：称为系统类加载器，负责加载应用程序classpath目录下的所有jar和class文件。</p>
-</li>
-<li><p><strong>CustomClassLoader</strong>： 用户自定义类加载器，对于用户自定义的加载器，不管你是直接实现ClassLoader,还是继承URLClassLoader,或者其他的子类。它的父类加载器都是AppClassLoader ，因为不管调用哪个父类构造器，创建的对象都必须最终调用getSystemClassLoader()作为父加载器，而getSystemClassLoader()方法获取到的正是AppClassLoader 。</p>
-</li>
-</ul>
-<ol start="3">
-<li>当JVM运行过程中，用户需要加载某些类时，会按照下面的步骤（父类委托机制）：</li>
-</ol>
-<ul>
-<li>用户自己的类加载器，把加载请求传给父加载器，父加载器再传给其父加载器，一直到加载器树的顶层。</li>
-<li>最顶层的类加载器首先针对其特定的位置加载，如果加载不到就转交给子类。</li>
-<li>如果一直到底层的类加载都没有加载到，那么就会抛出异常ClassNotFoundException。</li>
-</ul>
+        <p><img src="/2019/11/17/关于maven项目整poi读取excel/winter.jpg" alt="封皮"></p>
+<h1 id="关于ssm的maven项目整合poi读取excel"><a href="#关于ssm的maven项目整合poi读取excel" class="headerlink" title="关于ssm的maven项目整合poi读取excel"></a>关于ssm的maven项目整合poi读取excel</h1><p>   记录一下项目中用到poi读取excel的一次经历吧，防止日后需要</p>
+<h2 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h2><pre><code>+ maven方式导入poi相关包
++ controller中获取到要上传的文件，转化成输入流。
++ 准备一个工具类根据文件后缀名称识别excel版本
++ 根据不同的版本采用不同的构造方式得到Workbook对象
++ 根据传入的Workbook对象，得到相关的sheet，和行还有单元格，读入相关的对象，存到数据库中。</code></pre><h2 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h2><p><strong>maven导入</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-codec<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-codec<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>SXSSHWorkbook适用于处理大量数据。</p>
+<p><strong>判断版本的工具类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExcelUtils</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/** </span></span><br><span class="line"><span class="comment">     * 验证EXCEL文件 </span></span><br><span class="line"><span class="comment">     *  </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> filePath </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">validateExcel</span><span class="params">(String filePath)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">if</span> (filePath == <span class="keyword">null</span> || !(isExcel2003(filePath) || isExcel2007(filePath))) &#123;   </span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">// @描述：是否是2003的excel，返回true是2003   </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isExcel2003</span><span class="params">(String filePath)</span>  </span>&#123;    </span><br><span class="line">         <span class="keyword">return</span> filePath.matches(<span class="string">"^.+\\.(?i)(xls)$"</span>);    </span><br><span class="line">     &#125;    </span><br><span class="line">     </span><br><span class="line">    <span class="comment">//@描述：是否是2007的excel，返回true是2007   </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isExcel2007</span><span class="params">(String filePath)</span>  </span>&#123;    </span><br><span class="line">         <span class="keyword">return</span> filePath.matches(<span class="string">"^.+\\.(?i)(xlsx)$"</span>);    </span><br><span class="line">     &#125;    </span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>controller中获得相关的输入流和文件的文件名</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Msg <span class="title">uploadExcel</span><span class="params">(@RequestBody MultipartFile file,HttpServletRequest request)</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//获取到上传文件名称</span></span><br><span class="line">		String fileName=file.getOriginalFilename();</span><br><span class="line">		<span class="keyword">if</span>(!ExcelUtils.validateExcel(fileName)) &#123;</span><br><span class="line">			<span class="keyword">return</span>  Msg.error(<span class="string">"文件错误！"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			</span><br><span class="line">		Workbook wb = <span class="keyword">null</span>;</span><br><span class="line">		</span><br><span class="line">        InputStream is = file.getInputStream();</span><br><span class="line">        </span><br><span class="line">		<span class="keyword">if</span>(ExcelUtils.isExcel2003(fileName)) &#123;</span><br><span class="line">			wb=<span class="keyword">new</span> HSSFWorkbook(is);</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			wb=<span class="keyword">new</span> XSSFWorkbook(is);</span><br><span class="line">		&#125;</span><br><span class="line">		List&lt;LearnedStudent&gt; list=getlist(wb);</span><br><span class="line">		<span class="keyword">int</span> num=upservice.insertForeach(list);</span><br><span class="line">		<span class="keyword">return</span> Msg.success(<span class="string">"成功清空并导入！"</span>).add(<span class="string">"number"</span>, num);</span><br><span class="line">		</span><br><span class="line">		&#125;<span class="keyword">catch</span> (Exception e)  &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> Msg.error(<span class="string">"导入失败，请检查表格格式！"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>得到sheet和row还有cell的方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">		Sheet sheet=wb.getSheetAt(<span class="number">0</span>);</span><br><span class="line">		 <span class="comment">//得到第一个sheet</span></span><br><span class="line">		<span class="keyword">int</span> rownum=sheet.getPhysicalNumberOfRows();</span><br><span class="line">		<span class="comment">//得到sheet表的行数</span></span><br><span class="line">		cellnum  =sheet.getRow(<span class="number">0</span>).getPhysicalNumberOfCells();</span><br><span class="line">		<span class="comment">//得到sheet表的列数</span></span><br><span class="line">		 Row row = sheet.getRow(i);</span><br><span class="line">		 <span class="comment">//得到行</span></span><br><span class="line">		 Cell cell = row.getCell(j);</span><br><span class="line">		<span class="comment">//得到cell</span></span><br><span class="line"><span class="comment">//根据需要采用循环的方式一行一行读cell</span></span><br></pre></td></tr></table></figure>
+
+<p>另外考虑到以后可能会用到更大数据量的情况，附上大数据量处理的连接<br><a href="https://blog.csdn.net/whandgdh/article/details/80267674" target="_blank" rel="noopener">csdn的一位博主</a></p>
 
       
 
@@ -229,7 +218,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JavaEE</a>
         		</li>
       		
 		</ul>
@@ -285,7 +274,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/09/java内存模型/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/11/17/关于maven项目整poi读取excel/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -299,18 +288,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/10/09/linux命令/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          linux命令总结篇
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/10/09/Tomcat的面经/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Tomcat的面经</div>
+    <a href="/2019/11/16/关于一个令牌验证的框架/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于一个令牌验证的框架</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -337,7 +317,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java类加载机制"><span class="toc-number">1.</span> <span class="toc-text">java类加载机制</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关于ssm的maven项目整合poi读取excel"><span class="toc-number">1.</span> <span class="toc-text">关于ssm的maven项目整合poi读取excel</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#整体思路"><span class="toc-number">1.1.</span> <span class="toc-text">整体思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关代码"><span class="toc-number">1.2.</span> <span class="toc-text">相关代码</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
