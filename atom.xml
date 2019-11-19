@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-17T02:54:34.579Z</updated>
+  <updated>2019-11-19T05:49:27.509Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jvm调整</title>
+    <link href="http://yoursite.com/2019/11/19/jvm%E8%B0%83%E6%95%B4/"/>
+    <id>http://yoursite.com/2019/11/19/jvm调整/</id>
+    <published>2019-11-19T04:49:15.000Z</published>
+    <updated>2019-11-19T05:49:27.509Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/2019/11/19/jvm调整/jvm.jpg" alt="封皮"></p><a id="more"></a><p>##有关jvm堆内存的一次调整记录<br>    项目中需要一次读入一个很大的列表，大概5-6万条左右，本地跑着没有啥问题，然后拉到生产环境上面去，就只返回一个200的code，啥都没有，赶紧去翻log，发现有一个异常java.lang.outofMemory,按理说应该就没啥好说的了，动手到tomcat的catelina.bat或者是linux的catelina.sh</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set "JAVA_OPTS=-Xms512m -Xmx1024m"</span><br></pre></td></tr></table></figure><p>按理说这么一搞，重启一下，应该就没问题了，堆的大小应该就够用了<br>然而事情哪有这么简单，有的人用winserver做服务器，启动，关闭，重启都在系统服务里做了，倒是方便，可是你会发现不管怎么配置catelina.bat，那个讨人厌的oom都不会消失折腾了好久终于发现，windowsserver系统服务中的启动关闭，用的都是tomcat.exe,读取的设置压根就不是catelina，而是系统的注册表，而且这个注册表的结构和普通的windows的结构还不是很一样，最终在这个目录下面<br><code>HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Apache Software Foundation\Procrun 2.0\Tomcat\Parameters\Java</code><br>找到了那两个值的设置位置。<br>啥都不想说了，心中一万个草泥马飞奔而过。。。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;/2019/11/19/jvm调整/jvm.jpg&quot; alt=&quot;封皮&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="jvm" scheme="http://yoursite.com/tags/jvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于mybatis的批量插入</title>
+    <link href="http://yoursite.com/2019/11/19/%E5%85%B3%E4%BA%8Emaven%E7%9A%84%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5/"/>
+    <id>http://yoursite.com/2019/11/19/关于maven的批量插入/</id>
+    <published>2019-11-19T04:48:49.000Z</published>
+    <updated>2019-11-19T05:52:48.066Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/2019/11/19/关于maven的批量插入/fengpi.jpg" alt="封面"></p><a id="more"></a><p>##关于mybatis向数据库中批量插入数据的问题<br>    最近项目中有一个需求是通过读入一个excel生成对象插入到mysql中，项目结合了mybatis，在导入数据量很少的情况下，一切都显得其乐融融，很完美，但是数据量变成了5w条之后，就出现了各种各样的问题，写一下记录一下。<br><strong>实现思路：</strong></p><ol><li>文件读取之后对excel进行解析，得到一个对象的list。</li><li>mybatis中配置一个foreach的插入。</li><li>写好dao接口和service之后在controller中进行调用<br>关键的代码是foreach的插入<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insertForeach"</span>&gt;</span></span><br><span class="line">insert into learnedstudent(stu_id,stu_name,stu_class,stu_college,stu_school)</span><br><span class="line">values</span><br><span class="line">   <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"list"</span> <span class="attr">item</span>=<span class="string">"stu"</span> <span class="attr">separator</span>=<span class="string">","</span>&gt;</span></span><br><span class="line">   (</span><br><span class="line">   #&#123;stu.stu_no&#125;,</span><br><span class="line">   #&#123;stu.stu_name&#125;,</span><br><span class="line">   #&#123;stu.stu_class&#125;,</span><br><span class="line">   #&#123;stu.stu_college&#125;,</span><br><span class="line">   #&#123;stu.stu_school&#125;</span><br><span class="line">   )</span><br><span class="line">   <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure></li></ol><p><strong>碰到的问题</strong><br>小数据量的情况下速度很快，一点问题没有，但是5w多条之后就会报一个query.package过长的错误，估计意思就是中间的对象过多，一次的语句量过大。<br>解决的方法就是去数据库中，打开命令窗口</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+------------+</span></span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+<span class="comment">--------------------------+------------+</span></span><br><span class="line">| max_allowed_packet | 4194304 |</span><br><span class="line">| slave_max_allowed_packet | 1073741824 |</span><br><span class="line">+<span class="comment">--------------------------+------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure><p>max_allowed_packet就是有关这一项的设置参数，做如下设置</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set max_allowed_packet=100*1024*1024;</span><br></pre></td></tr></table></figure><p>即大小设为100M报错消失</p><h2 id="思考："><a href="#思考：" class="headerlink" title="思考："></a>思考：</h2><p>当数据量更大的时候怎么办，内存的大小终究是有限的，网络上有一种解决方法<br>思路：<br>Mybatis内置的ExecutorType有3种，默认为simple,该模式下它为每个语句的执行创建一个新的预处理语句，单条提交sql；而batch模式重复使用已经预处理的语句，并且批量执行所有更新语句，显然batch性能将更优； 但batch模式也有自己的问题，比如在Insert操作时，在事务没有提交之前，是没有办法获取到自增的id，这在某型情形下是不符合业务要求的</p><p>(1)在全局配置文件Mybatis-springmvc.xml(根据个人的配置方式不同写入)中加入</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置一个可以批量执行的sqlSession --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"sqlSession"</span> <span class="attr">class</span>=<span class="string">"org.mybatis.spring.SqlSessionTemplate"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"sqlSessionFactory"</span> <span class="attr">ref</span>=<span class="string">"sqlSessionFactory"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"executorType"</span> <span class="attr">value</span>=<span class="string">"BATCH"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure><p>(2)在serviceImpl中加入</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line"><span class="comment">//批量保存员工</span></span><br><span class="line">   <span class="keyword">private</span> SqlSession sqlSession;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Integer <span class="title">batchEmp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">   </span><br><span class="line">           <span class="comment">//批量保存执行前时间</span></span><br><span class="line">           <span class="keyword">long</span> start=System.currentTimeMillis();</span><br><span class="line">   </span><br><span class="line">           EmployeeMapper mapper=    sqlSession.getMapper(EmployeeMapper.class);</span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">               mapper.addEmp(<span class="keyword">new</span> Employee(UUID.randomUUID().toString().substring(<span class="number">0</span>,<span class="number">5</span>),<span class="string">"b"</span>,<span class="string">"1"</span>));</span><br><span class="line">   </span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">long</span> end=  System.currentTimeMillis();</span><br><span class="line">           <span class="keyword">long</span> time2= end-start;</span><br><span class="line">           <span class="comment">//批量保存执行后的时间</span></span><br><span class="line">           System.out.println(<span class="string">"执行时长"</span>+time2);</span><br><span class="line">           </span><br><span class="line">          </span><br><span class="line">       <span class="keyword">return</span> (<span class="keyword">int</span>) time2;    </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><p>mapper和mapper.xml如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeMapper</span> </span>&#123;    </span><br><span class="line"><span class="comment">//批量保存员工</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Long <span class="title">addEmp</span><span class="params">(Employee employee)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.agesun.mybatis.dao.EmployeeMapper"</span></span></span><br><span class="line">     &lt;!--批量保存员工 --&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"addEmp"</span>&gt;</span></span><br><span class="line">        insert into employee(lastName,email,gender)</span><br><span class="line">        values(#&#123;lastName&#125;,#&#123;email&#125;,#&#123;gender&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;/2019/11/19/关于maven的批量插入/fengpi.jpg&quot; alt=&quot;封面&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="JavaEE" scheme="http://yoursite.com/tags/JavaEE/"/>
+    
+      <category term="Mybatis" scheme="http://yoursite.com/tags/Mybatis/"/>
+    
+  </entry>
   
   <entry>
     <title>关于maven项目整poi读取excel</title>
@@ -397,48 +441,6 @@
     
     
       <category term="数据结构和算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>servlet大概</title>
-    <link href="http://yoursite.com/2019/09/29/servlet%E5%A4%A7%E6%A6%82/"/>
-    <id>http://yoursite.com/2019/09/29/servlet大概/</id>
-    <published>2019-09-29T03:48:37.000Z</published>
-    <updated>2019-10-05T08:57:16.297Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。"><a href="#servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。" class="headerlink" title="servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。"></a>servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。</h2><a id="more"></a><h2 id="首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，"><a href="#首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，" class="headerlink" title="首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，"></a>首先，servlet不是一个框架，他是服务器端运行的一个程序，是个被编译好的java类，web容器（web服务器）的启动需要依靠servlet，当web服务器开始执行的时候，servlet类就被初始化，</h2><h2 id="Java-Servlet-是运行在带有支持-Java-Servlet-规范的解释器的-web-服务器上的-Java-类。"><a href="#Java-Servlet-是运行在带有支持-Java-Servlet-规范的解释器的-web-服务器上的-Java-类。" class="headerlink" title="Java Servlet 是运行在带有支持 Java Servlet 规范的解释器的 web 服务器上的 Java 类。"></a>Java Servlet 是运行在带有支持 Java Servlet 规范的解释器的 web 服务器上的 Java 类。</h2><ol><li>Servlet 可以使用 javax.servlet 和 javax.servlet.http 包创建，它是 Java 企业版的标准组成部分，Java 企业版是支持大型开发项目的 Java 类库的扩展版本。</li><li>这些类实现 Java Servlet 和 JSP 规范。在写本教程的时候，二者相应的版本分别是 Java Servlet 2.5 和 JSP 2.1。</li><li>Java Servlet 就像任何其他的 Java 类一样已经被创建和编译。在您安装 Servlet 包并把它们添加到您的计算机上的 Classpath 类路径中之后，您就可以通过 JDK 的 Java 编译器或任何其他编译器来编译 Servlet。<h2 id="Java-Servlet-通常情况下与使用-CGI（Common-Gateway-Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于-CGI，Servlet-有以下几点优势："><a href="#Java-Servlet-通常情况下与使用-CGI（Common-Gateway-Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于-CGI，Servlet-有以下几点优势：" class="headerlink" title="Java Servlet 通常情况下与使用 CGI（Common Gateway Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于 CGI，Servlet 有以下几点优势："></a>Java Servlet 通常情况下与使用 CGI（Common Gateway Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于 CGI，Servlet 有以下几点优势：</h2></li><li>性能明显更好。</li><li>Servlet 在 Web 服务器的地址空间内执行。这样它就没有必要再创建一个单独的进程来处理每个客户端请求。</li><li>Servlet 是独立于平台的，因为它们是用 Java 编写的。</li><li>服务器上的 Java 安全管理器执行了一系列限制，以保护服务器计算机上的资源。因此，Servlet 是可信的。</li><li>Java 类库的全部功能对 Servlet 来说都是可用的。它可以通过 sockets 和 RMI 机制与 applets、数据库或其他软件进行交互。</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。&quot;&gt;&lt;a href=&quot;#servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。&quot; class=&quot;headerlink&quot; title=&quot;servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。&quot;&gt;&lt;/a&gt;servlet是作为来自web浏览器或者是其他http客户端的请求和http服务器上的数据库或是应用程序的中间层。&lt;/h2&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="servlet" scheme="http://yoursite.com/tags/servlet/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring流程图解</title>
-    <link href="http://yoursite.com/2019/09/27/SpringMvc%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2019/09/27/SpringMvc学习总结/</id>
-    <published>2019-09-27T02:30:01.000Z</published>
-    <updated>2019-10-16T07:52:27.214Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="流程图解"><a href="#流程图解" class="headerlink" title="流程图解"></a>流程图解</h2><p><img src="/2019/09/27/SpringMvc学习总结/SpringMvc%E6%B5%81%E7%A8%8B.png" alt="图解"></p><a id="more"></a><h3 id="流程详解"><a href="#流程详解" class="headerlink" title="流程详解"></a>流程详解</h3><ol><li>客户端发送请求到DispatcherServlet(拦截器)</li></ol><ul><li><p>要了解为什么DispatcherServlet可以拦截所有的请求和底层，就要先了解servlet是什么。<a href="/serlet大概">servlet大概</a><br><img src="/2019/09/27/SpringMvc学习总结/diceng.png" alt="DispatcherServlet"></p></li><li><p>而继承了HTTPServlet的DispatcherServlet，在其父类FrameWorkServlet中实现了HTTPServlet的doGet，doPost等方法，代码实现如下</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    processRequest(request, response);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    processRequest(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>因为实现了这些方法，所以拦截器DispatcherServlet可以拦截所有的请求。</p></li></ul><ol start="2"><li>DispatcherServlet根据请求信息调用HandlerMapping，解析请求对应的Handler或是controller。返回一个Handler或是controller。</li></ol><ul><li>因为有次面试被为什么给折磨到崩裂开来，现在碰到这种问题，我都要问问自己为什么<br><img src="/2019/09/27/SpringMvc学习总结/handelermapping.png" alt="HandlerMapping"><br>SimpleUrlHandlerMapping类通过配置文件把url映射到Controller类<br>DefaultAnnotationHandlerMapping通过注解把URL映射到Controller类</li></ul><ol start="3"><li>解析到对应的Handler或者是controller后开始由HandlerAdapter适配器处理。帮助DispatcherServlet处理映射请求处理程序的适配器。他的作用是根据HandlerMapping返回的Handler对象（controller对象）然后去适配具体的方法。<br><img src="/2019/09/27/SpringMvc学习总结/HandlerAdapter.png" alt="HandlerAdapter"><br>AnnotationMethodHandlerAdapter：通过注解，把请求URL映射到Controller类的方法上。</li></ol><p>4.处理器完成任务了之后，会返回一个ModeAndView对象，Mode是返回的数据对象，而view是逻辑上的view。</p><ul><li>什么是modeAndview呢？<br>ModelAndView是Spring中标准的类，完全是Spring自己封装的对象。<br>实际上是两个部分一个是view，在我的理解来看就是一个标识id的作用，用来告知viewResolver去哪里找到view文件。而Mode由addObject()来决定的，他的本质是HashMap，键值对；</li></ul><p>5.ViewResolver会根据逻辑上的view来查找实际上的view</p><ul><li>就是根据那个标识id来去查找实际的view。具体怎么实现的呢？<br><img src="/2019/09/27/SpringMvc学习总结/vrs.png" alt="viewResolver"><br>首先InternalResourceViewResolver extends（继承）了 UrlBasedViewResolver；然后顺便说，把用于显示（view）的jsp文件放在WEB-INF文件夹下是一种安全的做法，这样不能通过url直接access这些jsp，只能通过Controller java类来访问它们。</li></ul><p>6.DispatcherServlet 会根据找到的实际的view然后把mode给它，通过浏览器表达给用户。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;流程图解&quot;&gt;&lt;a href=&quot;#流程图解&quot; class=&quot;headerlink&quot; title=&quot;流程图解&quot;&gt;&lt;/a&gt;流程图解&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/2019/09/27/SpringMvc学习总结/SpringMvc%E6%B5%81%E7%A8%8B.png&quot; alt=&quot;图解&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="SpringMvc" scheme="http://yoursite.com/tags/SpringMvc/"/>
     
   </entry>
   

@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: SpringMvc | Chi-bin·blog</title>
+  <title>关于mybatis的批量插入 | Chi-bin·blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="后端开发">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Chi-bin·blog">
-<meta property="og:url" content="http://yoursite.com/tags/SpringMvc/index.html">
+  <meta name="keywords" content="JavaEE,Mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于mybatis的批量插入">
+<meta property="og:url" content="http://yoursite.com/2019/11/19/关于maven的批量插入/index.html">
 <meta property="og:site_name" content="Chi-bin·blog">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/关于maven的批量插入/fengpi.jpg">
+<meta property="og:updated_time" content="2019-11-19T05:52:48.066Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chi-bin·blog">
+<meta name="twitter:title" content="关于mybatis的批量插入">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/19/关于maven的批量插入/fengpi.jpg">
   
   
     <link rel="icon" href="/favicon.png">
@@ -159,60 +162,201 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-关于maven的批量插入" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/27/SpringMvc学习总结/" class="archive-article-date">
-  	<time datetime="2019-09-27T02:30:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-27</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/27/SpringMvc学习总结/">Spring流程图解</a>
+    <h1 class="article-title" itemprop="name">
+      关于mybatis的批量插入
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/11/19/关于maven的批量插入/" class="archive-article-date">
+  	<time datetime="2019-11-19T04:48:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/2019/11/19/关于maven的批量插入/fengpi.jpg" alt="封面"></p>
+<a id="more"></a>
+<p>##关于mybatis向数据库中批量插入数据的问题<br>    最近项目中有一个需求是通过读入一个excel生成对象插入到mysql中，项目结合了mybatis，在导入数据量很少的情况下，一切都显得其乐融融，很完美，但是数据量变成了5w条之后，就出现了各种各样的问题，写一下记录一下。<br><strong>实现思路：</strong></p>
+<ol>
+<li>文件读取之后对excel进行解析，得到一个对象的list。</li>
+<li>mybatis中配置一个foreach的插入。</li>
+<li>写好dao接口和service之后在controller中进行调用<br>关键的代码是foreach的插入<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insertForeach"</span>&gt;</span></span><br><span class="line">	insert into learnedstudent(stu_id,stu_name,stu_class,stu_college,stu_school)</span><br><span class="line">	values</span><br><span class="line">	   <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"list"</span> <span class="attr">item</span>=<span class="string">"stu"</span> <span class="attr">separator</span>=<span class="string">","</span>&gt;</span></span><br><span class="line">   				(</span><br><span class="line">   					#&#123;stu.stu_no&#125;,</span><br><span class="line">   					#&#123;stu.stu_name&#125;,</span><br><span class="line">   					#&#123;stu.stu_class&#125;,</span><br><span class="line">   					#&#123;stu.stu_college&#125;,</span><br><span class="line">   					#&#123;stu.stu_school&#125;</span><br><span class="line">   				)</span><br><span class="line">   		<span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>碰到的问题</strong><br>小数据量的情况下速度很快，一点问题没有，但是5w多条之后就会报一个query.package过长的错误，估计意思就是中间的对象过多，一次的语句量过大。<br>解决的方法就是去数据库中，打开命令窗口</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+------------+</span></span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+<span class="comment">--------------------------+------------+</span></span><br><span class="line">| max_allowed_packet | 4194304 |</span><br><span class="line">| slave_max_allowed_packet | 1073741824 |</span><br><span class="line">+<span class="comment">--------------------------+------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>max_allowed_packet就是有关这一项的设置参数，做如下设置</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set max_allowed_packet=100*1024*1024;</span><br></pre></td></tr></table></figure>
+
+<p>即大小设为100M报错消失</p>
+<h2 id="思考："><a href="#思考：" class="headerlink" title="思考："></a>思考：</h2><p>当数据量更大的时候怎么办，内存的大小终究是有限的，网络上有一种解决方法<br>思路：<br>Mybatis内置的ExecutorType有3种，默认为simple,该模式下它为每个语句的执行创建一个新的预处理语句，单条提交sql；而batch模式重复使用已经预处理的语句，并且批量执行所有更新语句，显然batch性能将更优； 但batch模式也有自己的问题，比如在Insert操作时，在事务没有提交之前，是没有办法获取到自增的id，这在某型情形下是不符合业务要求的</p>
+<p>(1)在全局配置文件Mybatis-springmvc.xml(根据个人的配置方式不同写入)中加入</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置一个可以批量执行的sqlSession --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"sqlSession"</span> <span class="attr">class</span>=<span class="string">"org.mybatis.spring.SqlSessionTemplate"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"sqlSessionFactory"</span> <span class="attr">ref</span>=<span class="string">"sqlSessionFactory"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"executorType"</span> <span class="attr">value</span>=<span class="string">"BATCH"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>(2)在serviceImpl中加入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line"><span class="comment">//批量保存员工</span></span><br><span class="line">   <span class="keyword">private</span> SqlSession sqlSession;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Integer <span class="title">batchEmp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">   </span><br><span class="line">           <span class="comment">//批量保存执行前时间</span></span><br><span class="line">           <span class="keyword">long</span> start=System.currentTimeMillis();</span><br><span class="line">   </span><br><span class="line">           EmployeeMapper mapper=    sqlSession.getMapper(EmployeeMapper.class);</span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">               mapper.addEmp(<span class="keyword">new</span> Employee(UUID.randomUUID().toString().substring(<span class="number">0</span>,<span class="number">5</span>),<span class="string">"b"</span>,<span class="string">"1"</span>));</span><br><span class="line">   </span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">long</span> end=  System.currentTimeMillis();</span><br><span class="line">           <span class="keyword">long</span> time2= end-start;</span><br><span class="line">           <span class="comment">//批量保存执行后的时间</span></span><br><span class="line">           System.out.println(<span class="string">"执行时长"</span>+time2);</span><br><span class="line">           </span><br><span class="line">          </span><br><span class="line">       <span class="keyword">return</span> (<span class="keyword">int</span>) time2;    </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>mapper和mapper.xml如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeMapper</span> </span>&#123;    </span><br><span class="line"><span class="comment">//批量保存员工</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Long <span class="title">addEmp</span><span class="params">(Employee employee)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.agesun.mybatis.dao.EmployeeMapper"</span></span></span><br><span class="line">     &lt;!--批量保存员工 --&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"addEmp"</span>&gt;</span></span><br><span class="line">        insert into employee(lastName,email,gender)</span><br><span class="line">        values(#&#123;lastName&#125;,#&#123;email&#125;,#&#123;gender&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">SpringMvc</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JavaEE</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Mybatis</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/11/19/关于maven的批量插入/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2019/11/19/jvm调整/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          jvm调整
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2019/11/17/关于maven项目整poi读取excel/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于maven项目整poi读取excel</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#思考："><span class="toc-number">1.</span> <span class="toc-text">思考：</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -236,9 +380,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
